@@ -826,8 +826,8 @@ form .quiz-footer .btn-nav.primary {
     letter-spacing: -0.5px;
     text-transform: uppercase;
     color: #fff;
-    margin-top: 0; /* Убрали margin-top: -9px */
-    margin-bottom: 24px;
+    margin-top: -4px; /* Убрали margin-top: -9px */
+    margin-bottom: -10px;
 }
 
 .footer-logo .logo-icon {
@@ -866,7 +866,7 @@ form .quiz-footer .btn-nav.primary {
 .footer-title {
     font-size: 1.4rem; /* Было 1.1rem, изменили на 1.4rem как у логотипа */
     font-weight: 700;
-    margin-bottom: 24px;
+    margin-bottom: -10px;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     color: #fff;
@@ -1317,8 +1317,4 @@ form .quiz-footer .btn-nav.primary {
     .house-btn .btn-text {
         font-size: 0.75rem;
     }
-}
-
-.footer-logo {
-    margin-top: -9.5px;
 }
