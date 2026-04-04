@@ -1,6 +1,16 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 
+// Списки опций для Шага 2 в зависимости от ответа на Шаге 1
+const OPTIONS_BY_TYPE = {
+    "Квартира": ["Кухня", "Гостиная", "Спальня", "Детская", "Санузел", "Прихожая", "Кабинет", "Гардеробная", "Балкон / лоджия", "Полностью всё помещение"],
+    "Частный дом": ["Кухня", "Гостиная", "Спальня", "Детская", "Санузел", "Прихожая", "Кабинет", "Гардеробная", "Балкон / лоджия", "Полностью всё помещение"],
+    "Офис": ["Кухня", "Санузел", "Прихожая", "Кабинет", "Гардеробная", "Полностью всё помещение"],
+    "Коммерческое помещение": ["Кухня", "Санузел", "Кабинет", "Гардеробная", "Полностью всё помещение"],
+    "Студия / апартаменты": ["Кухня", "Гостиная", "Спальня", "Детская", "Санузел", "Прихожая", "Кабинет", "Гардеробная", "Балкон / лоджия", "Полностью всё помещение"],
+    "Другое": ["Кухня", "Гостиная", "Спальня", "Детская", "Санузел", "Прихожая", "Кабинет", "Гардеробная", "Балкон / лоджия", "Полностью всё помещение"]
+}
+
 // Данные квиза
 const QUIZ_DATA = [
     {
@@ -14,7 +24,7 @@ const QUIZ_DATA = [
         id: 2,
         type: 'multiple',
         title: 'Какие зоны нужно включить в дизайн-проект?',
-        options: ['Кухня', 'Гостиная', 'Спальня', 'Детская', 'Санузел', 'Прихожая', 'Кабинет', 'Гардеробная', 'Балкон / лоджия', 'Полностью всё помещение'],
+        options: [], // Опции будут подставляться динамически
         message: 'Перечислите основные комнаты. Мы можем спроектировать как одну комнату, так и весь дом под ключ.'
     },
     {
@@ -226,10 +236,195 @@ function App() {
         setTimeout(() => setSuccess(true), 500)
     }
 
-    const isNextDisabled = () => !answers[`step_${step}`]
+    const isNextDisabled = () => {
+        // Для шага 2 проверяем наличие массива и его длину
+        if (step === 2) {
+            const val = answers[`step_${step}`];
+            return !val || val.length === 0;
+        }
+        return !answers[`step_${step}`];
+    }
+
     const isFormValid = () => contactForm.phone && contactForm.agree
 
     const currentData = QUIZ_DATA.find(d => d.id === step)
+
+    // Определяем данные для рендера с учетом динамики
+    const stepData = step === 2 && answers['step_1']
+        ? { ...currentData, options: OPTIONS_BY_TYPE[answers['step_1']] || currentData.options }
+        : currentData;
+
+    // Функция рендера карточек для первого шага
+    const renderStep1Cards = () => {
+        const currentSelection = answers[`step_${step}`]
+
+        // Картинки для вариантов
+        const images = {
+            "Квартира": "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=300&q=80",
+            "Частный дом": "https://images.unsplash.com/photo-1518780664697-55e3ad937233?auto=format&fit=crop&w=300&q=80",
+            "Офис": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=300&q=80",
+            "Коммерческое помещение": "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=300&q=80",
+            "Студия / апартаменты": "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=300&q=80",
+            "Другое": "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=300&q=80"
+        }
+
+        return (
+            <div className="options-grid-step-1">
+                {QUIZ_DATA[0].options.map((opt, idx) => (
+                    <div
+                        key={idx}
+                        className={`option-card ${currentSelection === opt ? 'selected' : ''}`}
+                        onClick={() => handleAnswer(opt)}
+                    >
+                        <div className="card-image-wrapper">
+                            <img src={images[opt]} alt={opt} />
+                            {currentSelection === opt && <div className="check-overlay">✓</div>}
+                        </div>
+                        <span className="card-title">{opt}</span>
+                    </div>
+                ))}
+            </div>
+        )
+    }
+
+    // Функция рендера обычных вопросов (radio, checkbox, range)
+    const renderQuestionContent = (data) => {
+        if (!data) return null
+
+        // Если это шаг 2 - рендерим карточки с картинками
+        if (step === 2 && data.type === 'multiple') {
+            const currentSelection = answers[`step_${step}`] || []
+
+            // Картинки для зон
+            const zoneImages = {
+                "Кухня": "https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=300&q=80",
+                "Гостиная": "https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?auto=format&fit=crop&w=300&q=80",
+                "Спальня": "https://images.unsplash.com/photo-1505693416388-b0346ef41439?auto=format&fit=crop&w=300&q=80",
+                "Детская": "https://images.unsplash.com/photo-1503435980943-918406f9ef43?auto=format&fit=crop&w=300&q=80",
+                "Санузел": "https://images.unsplash.com/photo-1552321554-5f4080a55e3c?auto=format&fit=crop&w=300&q=80",
+                "Прихожая": "https://images.unsplash.com/photo-1600590788195-e6db2e8b23ab?auto=format&fit=crop&w=300&q=80",
+                "Кабинет": "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=300&q=80",
+                "Гардеробная": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=300&q=80",
+                "Балкон / лоджия": "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=300&q=80",
+                "Полностью всё помещение": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=300&q=80"
+            }
+
+            return (
+                <div className="options-grid-step-1">
+                    {data.options.map((opt, idx) => {
+                        const isChecked = currentSelection.includes(opt)
+                        const isAllOption = (opt === "Полностью всё помещение")
+
+                        const toggleCheck = () => {
+                            let newSelection = [...currentSelection]
+
+                            if (isAllOption) {
+                                // ЛОГИКА ДЛЯ "ПОЛНОСТЬЮ ВСЁ ПОМЕЩЕНИЕ"
+                                if (isChecked) {
+                                    // Если было выбрано "всё", то снимаем ВСЕ галочки
+                                    newSelection = []
+                                } else {
+                                    // Если не было выбрано, выбираем ВСЕ пункты из списка
+                                    newSelection = [...data.options]
+                                }
+                            } else {
+                                // ЛОГИКА ДЛЯ ОБЫЧНЫХ ПУНКТОВ
+
+                                // Если сейчас выбрано "Полностью всё помещение", то при клике на
+                                // конкретный пункт нужно сначала снять галочку с "Полностью всё помещение"
+                                if (currentSelection.includes("Полностью всё помещение")) {
+                                    newSelection = newSelection.filter(item => item !== "Полностью всё помещение")
+                                }
+
+                                // Теперь переключаем конкретный пункт
+                                if (isChecked) {
+                                    newSelection = newSelection.filter(item => item !== opt)
+                                } else {
+                                    newSelection.push(opt)
+                                }
+                            }
+
+                            handleAnswer(newSelection)
+                        }
+
+                        return (
+                            <div
+                                key={idx}
+                                className={`option-card ${isChecked ? 'selected' : ''}`}
+                                onClick={toggleCheck}
+                            >
+                                <div className="card-image-wrapper">
+                                    <img src={zoneImages[opt]} alt={opt} />
+                                    {isChecked && <div className="check-overlay">✓</div>}
+                                </div>
+                                <span className="card-title">{opt}</span>
+                            </div>
+                        )
+                    })}
+                </div>
+            )
+        }
+
+        // Для остальных шагов - стандартный рендер
+        return (
+            <div className="options-list">
+                {data.type === 'single' && data.options.map((opt, idx) => (
+                    <label key={idx} className="option-item">
+                        <input
+                            type="radio"
+                            name={`q_${step}`}
+                            value={opt}
+                            checked={answers[`step_${step}`] === opt}
+                            onChange={() => handleAnswer(opt)}
+                        />
+                        <span className="option-icon"></span>
+                        {opt}
+                    </label>
+                ))}
+
+                {data.type === 'multiple' && data.options.map((opt, idx) => {
+                    const currentSelection = answers[`step_${step}`] || []
+                    const isChecked = currentSelection.includes(opt)
+
+                    const toggleCheck = () => {
+                        let newSelection
+                        if (isChecked) {
+                            newSelection = currentSelection.filter(item => item !== opt)
+                        } else {
+                            newSelection = [...currentSelection, opt]
+                        }
+                        handleAnswer(newSelection)
+                    }
+
+                    return (
+                        <div key={idx} className="option-item checkbox" onClick={toggleCheck}>
+                            <input
+                                type="checkbox"
+                                checked={isChecked}
+                                onChange={() => {}}
+                            />
+                            <span className="option-icon"></span>
+                            {opt}
+                        </div>
+                    )
+                })}
+
+                {data.type === 'range' && (
+                    <div className="range-container">
+                        <span className="range-value">{answers[`step_${step}`] || data.defaultValue} м²</span>
+                        <input
+                            type="range"
+                            min={data.min}
+                            max={data.max}
+                            step={data.step}
+                            defaultValue={data.defaultValue}
+                            onChange={(e) => handleAnswer(e.target.value)}
+                        />
+                    </div>
+                )}
+            </div>
+        )
+    }
 
     return (
         <div className="page-wrapper">
@@ -269,116 +464,27 @@ function App() {
                                     {step === 6 ? (
                                         <>
                                             <div className="quiz-header">Мы уже приступили к расчёту!</div>
-                                            <div className="question-title" style={{fontSize: '1.4rem'}}>
-                                                Укажите ваши контактные данные для получения результата расчёта и закрепления за вами персональной скидки 5%
-                                            </div>
-
+                                            <div className="question-title" style={{fontSize: '1.4rem'}}>Укажите ваши контактные данные</div>
                                             <form onSubmit={handleSubmit} style={{ marginTop: '30px' }}>
-                                                <div className="form-group">
-                                                    <input
-                                                        type="text"
-                                                        name="name"
-                                                        className="form-input"
-                                                        placeholder="Имя"
-                                                        value={contactForm.name}
-                                                        onChange={handleContactChange}
-                                                    />
-                                                </div>
-                                                <div className="form-group">
-                                                    <input
-                                                        type="tel"
-                                                        name="phone"
-                                                        className="form-input"
-                                                        placeholder="Телефон *"
-                                                        required
-                                                        value={contactForm.phone}
-                                                        onChange={handleContactChange}
-                                                    />
-                                                </div>
-                                                <div className="form-group">
-                                                    <input
-                                                        type="email"
-                                                        name="email"
-                                                        className="form-input"
-                                                        placeholder="E-mail (необязательно)"
-                                                        value={contactForm.email}
-                                                        onChange={handleContactChange}
-                                                    />
-                                                </div>
-                                                <div className="form-group">
-                                                <textarea
-                                                    name="comment"
-                                                    className="form-input"
-                                                    rows="2"
-                                                    placeholder="Комментарий"
-                                                    value={contactForm.comment}
-                                                    onChange={handleContactChange}
-                                                />
-                                                </div>
-
-                                                <label className="form-checkbox">
-                                                    <input
-                                                        type="checkbox"
-                                                        name="agree"
-                                                        checked={contactForm.agree}
-                                                        onChange={handleContactChange}
-                                                    />
-                                                    <span>Я даю согласие на обработку персональных данных</span>
-                                                </label>
-
-                                                {/* ИЗМЕНЕННЫЙ БЛОК С КНОПКАМИ */}
+                                                <div className="form-group"><input type="text" name="name" className="form-input" placeholder="Имя" value={contactForm.name} onChange={handleContactChange} /></div>
+                                                <div className="form-group"><input type="tel" name="phone" className="form-input" placeholder="Телефон *" required value={contactForm.phone} onChange={handleContactChange} /></div>
+                                                <div className="form-group"><input type="email" name="email" className="form-input" placeholder="E-mail" value={contactForm.email} onChange={handleContactChange} /></div>
+                                                <div className="form-group"><textarea name="comment" className="form-input" rows="2" placeholder="Комментарий" value={contactForm.comment} onChange={handleContactChange} /></div>
+                                                <label className="form-checkbox"><input type="checkbox" name="agree" checked={contactForm.agree} onChange={handleContactChange} /><span>Я даю согласие на обработку персональных данных</span></label>
                                                 <div className="quiz-footer" style={{ marginTop: '30px' }}>
-                                                    <button
-                                                        type="button"
-                                                        className="btn-nav"
-                                                        onClick={() => setStep(5)}
-                                                    >
-                                                        ← Назад
-                                                    </button>
-                                                    <button
-                                                        type="submit"
-                                                        className="btn-nav primary"
-                                                        style={{ flex: 1 }}
-                                                        disabled={!isFormValid()}
-                                                    >
-                                                        ОСТАВИТЬ ЗАЯВКУ
-                                                    </button>
+                                                    <button type="button" className="btn-nav" onClick={() => setStep(5)}>← Назад</button>
+                                                    <button type="submit" className="btn-nav primary" style={{ flex: 1 }} disabled={!isFormValid()}>ОСТАВИТЬ ЗАЯВКУ</button>
                                                 </div>
                                             </form>
                                         </>
                                     ) : (
                                         <>
                                             <div className="quiz-header">Узнайте стоимость дизайн-проекта</div>
-                                            <div className="question-title">{currentData.title}</div>
-                                            <div className="options-list">
-                                                {currentData.type === 'single' && currentData.options.map((opt, idx) => (
-                                                    <label key={idx} className="option-item">
-                                                        <input type="radio" name={`q_${step}`} value={opt} checked={answers[`step_${step}`] === opt} onChange={() => handleAnswer(opt)} />
-                                                        <span className="option-icon"></span>
-                                                        {opt}
-                                                    </label>
-                                                ))}
-                                                {currentData.type === 'multiple' && currentData.options.map((opt, idx) => {
-                                                    const sel = answers[`step_${step}`] || []
-                                                    const isChecked = sel.includes(opt)
-                                                    return (
-                                                        <div key={idx} className="option-item checkbox" onClick={() => {
-                                                            const newSel = isChecked ? sel.filter(i => i !== opt) : [...sel, opt]
-                                                            handleAnswer(newSel)
-                                                        }}>
-                                                            <input type="checkbox" checked={isChecked} onChange={() => {}} />
-                                                            <span className="option-icon"></span>
-                                                            {opt}
-                                                        </div>
-                                                    )
-                                                })}
-                                                {currentData.type === 'range' && (
-                                                    <div className="range-container">
-                                                        <span className="range-value">{answers[`step_${step}`] || currentData.defaultValue} м²</span>
-                                                        <input type="range" min={currentData.min} max={currentData.max} step={currentData.step} defaultValue={currentData.defaultValue} onChange={(e) => handleAnswer(e.target.value)} />
-                                                    </div>
-                                                )}
-                                            </div>
+                                            <div className="question-title">{stepData.title}</div>
+
+                                            {/* Рендер карточек для шага 1, иначе обычный рендер */}
+                                            {step === 1 ? renderStep1Cards() : renderQuestionContent(stepData)}
+
                                             <div className="quiz-footer">
                                                 <div className="progress-container">
                                                     <span className="progress-text">Выполнено {step} из 5</span>
