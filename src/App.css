@@ -21,11 +21,16 @@
     padding: 0;
 }
 
+html {
+    scroll-behavior: smooth; /* Плавная прокрутка */
+}
+
 body {
     font-family: 'Inter', sans-serif; /* Изменено на Inter */
     background-color: var(--bg-color);
     color: var(--text-main);
     -webkit-font-smoothing: antialiased;
+
 }
 
 /* ========== HEADER STYLES ========== */
@@ -622,175 +627,6 @@ input[type=range]::-webkit-slider-runnable-track {
     color: var(--text-muted);
 }
 
-/* Prices Section */
-.prices-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
-    max-width: 1000px;
-    margin: 0 auto;
-}
-
-.price-card {
-    background: var(--card-bg);
-    padding: 40px 30px;
-    border-radius: 8px;
-    text-align: center;
-    position: relative;
-    border: 2px solid transparent;
-    transition: transform 0.3s, border-color 0.3s;
-}
-
-.price-card:hover {
-    transform: translateY(-5px);
-}
-
-.price-card.popular {
-    border-color: var(--text-main);
-    transform: scale(1.05);
-}
-
-.price-card.popular:hover {
-    transform: scale(1.05) translateY(-5px);
-}
-
-.popular-badge {
-    position: absolute;
-    top: -12px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--text-main);
-    color: #fff;
-    padding: 5px 20px;
-    font-size: 0.85rem;
-    font-weight: 700;
-    border-radius: 20px;
-    text-transform: uppercase;
-}
-
-.price-name {
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-bottom: 20px;
-    text-transform: uppercase;
-}
-
-.price-value {
-    margin-bottom: 30px;
-}
-
-.price-amount {
-    font-size: 3rem;
-    font-weight: 900;
-    display: block;
-    line-height: 1;
-}
-
-.price-unit {
-    font-size: 1.1rem;
-    color: var(--text-muted);
-}
-
-.price-features {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 30px 0;
-    text-align: left;
-}
-
-.price-feature {
-    padding: 10px 0;
-    border-bottom: 1px solid #ddd;
-    font-size: 0.95rem;
-    color: var(--text-main);
-}
-
-.price-feature:last-child {
-    border-bottom: none;
-}
-
-.price-button {
-    width: 100%;
-    padding: 15px;
-    background: var(--btn-color);
-    color: #fff;
-    border: none;
-    font-size: 1rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: background 0.3s;
-    text-transform: uppercase;
-}
-
-.price-button:hover {
-    background: var(--btn-hover);
-}
-
-/* Contacts Section */
-.contacts-section {
-    background-color: var(--card-bg);
-}
-
-.contacts-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 50px;
-    max-width: 1000px;
-    margin: 0 auto;
-}
-
-.contacts-info {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-}
-
-.contact-item {
-    padding: 20px;
-    background: var(--bg-color);
-    border-radius: 8px;
-}
-
-.contact-label {
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin-bottom: 10px;
-    font-weight: 600;
-}
-
-.contact-value {
-    font-size: 1.2rem;
-    color: var(--text-main);
-    text-decoration: none;
-    font-weight: 600;
-}
-
-.contact-value:hover {
-    opacity: 0.7;
-}
-
-.contacts-map {
-    background: var(--bg-color);
-    border-radius: 8px;
-    min-height: 400px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.map-placeholder {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    color: var(--text-muted);
-    background: #e0dcd5;
-    border-radius: 8px;
-}
-
 /* Mobile Adaptability */
 @media (max-width: 768px) {
     .content-section {
@@ -832,4 +668,234 @@ input[type=range]::-webkit-slider-runnable-track {
     }
 }
 
+/* ========== FOOTER STYLES ========== */
+.site-footer {
+    background-color: #1a1a1a;
+    color: #fff;
+    padding: 60px 0 0 0;
+    margin-top: auto;
+}
 
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 50px;
+    padding-bottom: 50px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-column {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 800;
+    font-size: 1.4rem;
+    letter-spacing: -0.5px;
+    text-transform: uppercase;
+}
+
+.footer-description {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.7);
+    max-width: 300px;
+}
+
+.footer-socials {
+    display: flex;
+    gap: 15px;
+}
+
+.social-link {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    color: #fff;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.social-link:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.footer-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.footer-link {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.2s;
+}
+
+.footer-link:hover {
+    color: #fff;
+}
+
+.footer-contact-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.footer-contact-item {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.footer-contact-item .contact-label {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+}
+
+.footer-contact-item .contact-link,
+.footer-contact-item .contact-text {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+}
+
+.footer-contact-item .contact-link:hover {
+    color: #fff;
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 0;
+    gap: 20px;
+}
+
+.footer-bottom-left {
+    flex: 1;
+}
+
+.copyright {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.5);
+    margin: 0;
+}
+
+.footer-bottom-right {
+    flex: 1;
+    text-align: right;
+}
+
+.admin-link {
+    display: inline-flex;
+    align-items: center;
+    color: rgba(255, 255, 255, 0.5);
+    text-decoration: none;
+    font-size: 0.9rem;
+    padding: 8px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    transition: all 0.3s;
+}
+
+.admin-link:hover {
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+
+/* Mobile Footer */
+@media (max-width: 768px) {
+    .footer-top {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+
+    .footer-bottom-right {
+        text-align: center;
+    }
+
+    .site-footer {
+        padding: 40px 0 0 0;
+    }
+}
+
+/* Принудительная видимость текста в подвале */
+.site-footer,
+.site-footer *,
+.site-footer p,
+.site-footer span,
+.site-footer h4,
+.site-footer a {
+    color: #ffffff !important;
+}
+
+/* Цвет ссылок в подвале чуть более приглушенный, чтобы отличаться */
+.footer-link,
+.contact-link,
+.admin-link {
+    color: rgba(255, 255, 255, 0.7) !important;
+    text-decoration: none;
+    transition: opacity 0.3s;
+}
+
+.footer-link:hover,
+.contact-link:hover,
+.admin-link:hover {
+    opacity: 1;
+    color: #ffffff !important;
+    text-decoration: underline; /* Опционально, чтобы видеть, что ссылка кликабельна */
+}
+
+/* Цвет описания */
+.footer-description {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* Цвет заголовков */
+.footer-title {
+    color: #ffffff !important;
+    font-weight: 700;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
