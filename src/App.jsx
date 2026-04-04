@@ -542,7 +542,7 @@ function App() {
                                                 <input type="text" name="name" className="form-input" placeholder="Имя" required value={contactForm.name} onChange={handleContactChange} />
                                             </div>
                                             <div className="form-group">
-                                                <input type="tel" name="phone" className="form-input" placeholder="+7 (___) ___-__-__" required value={contactForm.phone} onChange={handleContactChange} onKeyDown={handlePhoneKeyDown} />
+                                                <input type="tel" name="phone" className="form-input" placeholder="Номер телефона" required value={contactForm.phone} onChange={handleContactChange} onKeyDown={handlePhoneKeyDown} />
                                             </div>
                                             <div className="form-group">
                                                 <input type="email" name="email" className="form-input" placeholder="E-mail (необязательно)" value={contactForm.email} onChange={handleContactChange} />
