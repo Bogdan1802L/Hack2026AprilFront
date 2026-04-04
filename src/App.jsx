@@ -1,7 +1,5 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import './App.css'
-
-// --- ДАННЫЕ И КОНСТАНТЫ ---
 
 // Списки опций для Шага 2 в зависимости от ответа на Шаге 1
 const OPTIONS_BY_TYPE = {
@@ -229,6 +227,7 @@ function App() {
     const [answers, setAnswers] = useState({})
     const [contactForm, setContactForm] = useState({ name: '', phone: '', email: '', comment: '', agree: false })
     const [success, setSuccess] = useState(false)
+    const phoneInputRef = useRef(null)
 
     // Блокировка скролла при открытом квизе
     useEffect(() => {
@@ -258,14 +257,109 @@ function App() {
     const handleAnswer = (value) => setAnswers(prev => ({ ...prev, [`step_${step}`]: value }))
 
     const handleContactChange = (e) => {
-        const { name, value, type, checked } = e.target
-        setContactForm(prev => ({ ...prev, [name]: type === 'checkbox' ? checked : value }))
-    }
+        const { name, value, type, checked } = e.target;
+
+        let finalValue = value;
+
+        // Если это поле имени - убираем всё кроме букв и пробелов
+        if (name === 'name') {
+            // Разрешаем только буквы (кириллица и латиница), пробелы и апостроф
+            finalValue = value.replace(/[^a-zA-Zа-яА-ЯёЁ\s']/g, '');
+        }
+
+        // Если это поле телефона, применяем маску
+        if (name === 'phone') {
+            if (value === '') {
+                finalValue = '';
+            } else {
+                finalValue = formatPhone(value);
+            }
+        }
+
+        setContactForm(prev => ({
+            ...prev,
+            [name]: type === 'checkbox' ? checked : finalValue
+        }));
+    };
+
+    const handlePhoneKeyDown = (e) => {
+        // Если нажата Backspace или Delete, позволяем стирать
+        if (e.key === 'Backspace' || e.key === 'Delete') {
+            const input = e.target;
+            const currentValue = input.value;
+            const cursorPos = input.selectionStart;
+
+            // Если есть выделение, просто удалим и переформатируем
+            if (input.selectionStart !== input.selectionEnd) {
+                return;
+            }
+
+            // Для backspace: удаляем символ перед курсором
+            if (e.key === 'Backspace' && cursorPos > 0) {
+                const before = currentValue.substring(0, cursorPos - 1);
+                const after = currentValue.substring(cursorPos);
+                const newValue = before + after;
+
+                // Обновляем форму напрямую с неотформатированным значением
+                const numbersOnly = newValue.replace(/\D/g, '');
+
+                if (numbersOnly.length === 0) {
+                    setContactForm(prev => ({ ...prev, phone: '' }));
+                } else {
+                    // Отправляем на форматирование
+                    const formatted = formatPhone(newValue);
+                    setContactForm(prev => ({ ...prev, phone: formatted }));
+
+                    // Устанавливаем позицию курсора после переформатирования
+                    setTimeout(() => {
+                        input.selectionStart = input.selectionEnd = cursorPos - 1;
+                    }, 0);
+                }
+
+                e.preventDefault();
+            }
+        }
+    };
+
+    // Функция форматирования телефона
+    const formatPhone = (value) => {
+        // 1. Оставляем только цифры
+        let numbers = value.replace(/\D/g, '');
+
+        // Если нет цифр, возвращаем пустую строку
+        if (numbers.length === 0) {
+            return '';
+        }
+
+        // 2. Если первая цифра 8, меняем на 7
+        if (numbers[0] === '8') {
+            numbers = '7' + numbers.substring(1);
+        }
+
+        // 3. Если не начинается с 7, добавляем 7
+        if (numbers[0] !== '7') {
+            numbers = '7' + numbers;
+        }
+
+        // 4. Ограничиваем до 11 цифр максимум
+        numbers = numbers.substring(0, 11);
+
+        // 5. Собираем отформатированную строку: +7 (999) 999 99 99
+        let formatted = '';
+        if (numbers.length > 0) formatted = '+7';
+        if (numbers.length > 1) formatted += ' (' + numbers.substring(1, 4);
+        if (numbers.length >= 4) formatted += ')';
+        if (numbers.length > 4) formatted += ' ' + numbers.substring(4, 7);
+        if (numbers.length > 7) formatted += ' ' + numbers.substring(7, 9);
+        if (numbers.length > 9) formatted += ' ' + numbers.substring(9, 11);
+
+        return formatted;
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        if (!contactForm.phone || !contactForm.agree) {
-            alert('Пожалуйста, заполните телефон и дайте согласие на обработку данных.')
+        if (!contactForm.name || !contactForm.phone || !contactForm.agree) {
+            alert('Пожалуйста, укажите ваше имя, заполните телефон и дайте согласие на обработку данных.')
             return
         }
         // Сбор данных
@@ -289,7 +383,7 @@ function App() {
         return !answers[`step_${step}`];
     }
 
-    const isFormValid = () => contactForm.phone && contactForm.agree
+    const isFormValid = () => contactForm.name && contactForm.phone && contactForm.agree
 
     // Текущие данные квиза с учетом динамики (Шаг 2 зависит от Шага 1)
     const currentData = QUIZ_DATA.find(d => d.id === step)
@@ -359,6 +453,7 @@ function App() {
     // Шаг 3: Ползунок с визуализацией
     const renderStep3Range = (data) => {
         const val = answers[`step_3`] !== undefined ? answers[`step_3`] : data.defaultValue
+        // Формула для размера квадрата: от 140px до 280px
         const size = 140 + (val - data.min) * ((280 - 140) / (data.max - data.min))
 
         return (
@@ -449,10 +544,10 @@ function App() {
                                         </div>
                                         <form onSubmit={handleSubmit}>
                                             <div className="form-group">
-                                                <input type="text" name="name" className="form-input" placeholder="Имя" value={contactForm.name} onChange={handleContactChange} />
+                                                <input type="text" name="name" className="form-input" placeholder="Имя" required value={contactForm.name} onChange={handleContactChange} />
                                             </div>
                                             <div className="form-group">
-                                                <input type="tel" name="phone" className="form-input" placeholder="Телефон *" required value={contactForm.phone} onChange={handleContactChange} />
+                                                <input type="tel" name="phone" className="form-input" placeholder="+7 (___) ___-__-__" required value={contactForm.phone} onChange={handleContactChange} onKeyDown={handlePhoneKeyDown} />
                                             </div>
                                             <div className="form-group">
                                                 <input type="email" name="email" className="form-input" placeholder="E-mail (необязательно)" value={contactForm.email} onChange={handleContactChange} />
