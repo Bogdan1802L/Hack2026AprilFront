@@ -100,11 +100,6 @@ function Header() {
                         <span className="logo-icon">✦</span>
                         <span className="logo-text">VERNIKODOV</span>
                     </div>
-                    <nav className="main-nav">
-                        <a href="#services" className="nav-link">Услуги</a>
-                        <a href="#about" className="nav-link">О компании</a>
-                        <a href="#contacts" className="nav-link">Контакты</a>
-                    </nav>
                     <div className="header-contact">
                         <a href="tel:+79999999999" className="phone-link">+7 (999) 999-99-99</a>
                         <span className="work-hours">9:00–20:00</span>
