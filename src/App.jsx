@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 
+// --- ДАННЫЕ И КОНСТАНТЫ ---
+
 // Списки опций для Шага 2 в зависимости от ответа на Шаге 1
 const OPTIONS_BY_TYPE = {
     "Квартира": ["Кухня", "Гостиная", "Спальня", "Детская", "Санузел", "Прихожая", "Кабинет", "Гардеробная", "Балкон / лоджия", "Полностью всё помещение"],
@@ -53,7 +55,32 @@ const QUIZ_DATA = [
     }
 ]
 
-// Header Component
+// Картинки для типов помещений (Шаг 1)
+const TYPE_IMAGES = {
+    "Квартира": "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=300&q=80",
+    "Частный дом": "https://images.unsplash.com/photo-1518780664697-55e3ad937233?auto=format&fit=crop&w=300&q=80",
+    "Офис": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=300&q=80",
+    "Коммерческое помещение": "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=300&q=80",
+    "Студия / апартаменты": "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=300&q=80",
+    "Другое": "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=300&q=80"
+}
+
+// Картинки для зон (Шаг 2)
+const ZONE_IMAGES = {
+    "Кухня": "https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=300&q=80",
+    "Гостиная": "https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?auto=format&fit=crop&w=300&q=80",
+    "Спальня": "https://images.unsplash.com/photo-1505693416388-b0346ef41439?auto=format&fit=crop&w=300&q=80",
+    "Детская": "https://images.unsplash.com/photo-1503435980943-918406f9ef43?auto=format&fit=crop&w=300&q=80",
+    "Санузел": "https://images.unsplash.com/photo-1552321554-5f4080a55e3c?auto=format&fit=crop&w=300&q=80",
+    "Прихожая": "https://images.unsplash.com/photo-1600590788195-e6db2e8b23ab?auto=format&fit=crop&w=300&q=80",
+    "Кабинет": "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=300&q=80",
+    "Гардеробная": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=300&q=80",
+    "Балкон / лоджия": "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=300&q=80",
+    "Полностью всё помещение": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=300&q=80"
+}
+
+// --- КОМПОНЕНТЫ СТРАНИЦЫ ---
+
 function Header() {
     const handleLogoClick = () => window.scrollTo({ top: 0, behavior: 'smooth' })
     return (
@@ -79,7 +106,6 @@ function Header() {
     )
 }
 
-// Services Section
 function ServicesSection() {
     const services = [
         { title: 'Дизайн-проект квартиры', description: 'Полный комплекс услуг по разработке дизайна интерьера квартиры любой сложности' },
@@ -107,7 +133,6 @@ function ServicesSection() {
     )
 }
 
-// About Section
 function AboutSection() {
     return (
         <section id="about" className="content-section about-section">
@@ -134,7 +159,6 @@ function AboutSection() {
     )
 }
 
-// Footer Component
 function Footer() {
     return (
         <footer className="site-footer">
@@ -186,7 +210,8 @@ function Footer() {
     )
 }
 
-// Main App
+// --- ОСНОВНОЙ КОМПОНЕНТ ПРИЛОЖЕНИЯ ---
+
 function App() {
     const [started, setStarted] = useState(false)
     const [step, setStep] = useState(1)
@@ -194,15 +219,14 @@ function App() {
     const [contactForm, setContactForm] = useState({ name: '', phone: '', email: '', comment: '', agree: false })
     const [success, setSuccess] = useState(false)
 
+    // Блокировка скролла при открытом квизе
     useEffect(() => {
         if (started) {
             document.body.style.overflow = 'hidden'
         } else {
             document.body.style.overflow = ''
         }
-        return () => {
-            document.body.style.overflow = ''
-        }
+        return () => { document.body.style.overflow = '' }
     }, [started])
 
     const handleStart = () => setStarted(true)
@@ -211,7 +235,7 @@ function App() {
         if (step > 1) {
             setStep(step - 1)
         } else {
-            setStarted(false) // Закрыть квиз и вернуться на сайт
+            setStarted(false)
         }
     }
 
@@ -220,7 +244,9 @@ function App() {
         else setStep(6)
     }
 
-    const handleAnswer = (value) => setAnswers(prev => ({ ...prev, [`step_${step}`]: value }))
+    const handleAnswer = (value) => {
+        setAnswers(prev => ({ ...prev, [`step_${step}`]: value }))
+    }
 
     const handleContactChange = (e) => {
         const { name, value, type, checked } = e.target
@@ -233,202 +259,130 @@ function App() {
             alert('Пожалуйста, заполните телефон и дайте согласие на обработку данных.')
             return
         }
+        // Сбор данных
+        const finalData = {
+            ...answers,
+            step_3: answers['step_3'] || 60,
+            contact: contactForm,
+            timestamp: new Date().toISOString()
+        }
+        console.log('SUBMITTING DATA:', finalData)
         setTimeout(() => setSuccess(true), 500)
     }
 
+    // Валидация кнопки "Далее"
     const isNextDisabled = () => {
-        // Для шага 2 проверяем наличие массива и его длину
         if (step === 2) {
             const val = answers[`step_${step}`];
             return !val || val.length === 0;
         }
+        if (step === 3) return false; // Ползунок всегда валиден
         return !answers[`step_${step}`];
     }
 
     const isFormValid = () => contactForm.phone && contactForm.agree
 
+    // Текущие данные квиза с учетом динамики (Шаг 2 зависит от Шага 1)
     const currentData = QUIZ_DATA.find(d => d.id === step)
-
-    // Определяем данные для рендера с учетом динамики
     const stepData = step === 2 && answers['step_1']
         ? { ...currentData, options: OPTIONS_BY_TYPE[answers['step_1']] || currentData.options }
         : currentData;
 
-    // Функция рендера карточек для первого шага
-    const renderStep1Cards = () => {
-        const currentSelection = answers[`step_${step}`]
+    // --- РЕНДЕРИНГ ШАГОВ ---
 
-        // Картинки для вариантов
-        const images = {
-            "Квартира": "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=300&q=80",
-            "Частный дом": "https://images.unsplash.com/photo-1518780664697-55e3ad937233?auto=format&fit=crop&w=300&q=80",
-            "Офис": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=300&q=80",
-            "Коммерческое помещение": "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=300&q=80",
-            "Студия / апартаменты": "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=300&q=80",
-            "Другое": "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=300&q=80"
+    // Шаг 1: Карточки типов помещений
+    const renderStep1Cards = () => (
+        <div className="options-grid-step-1">
+            {QUIZ_DATA[0].options.map((opt, idx) => (
+                <div
+                    key={idx}
+                    className={`option-card ${answers['step_1'] === opt ? 'selected' : ''}`}
+                    onClick={() => handleAnswer(opt)}
+                >
+                    <div className="card-image-wrapper">
+                        <img src={TYPE_IMAGES[opt]} alt={opt} />
+                        {answers['step_1'] === opt && <div className="check-overlay">✓</div>}
+                    </div>
+                    <span className="card-title">{opt}</span>
+                </div>
+            ))}
+        </div>
+    )
+
+    // Шаг 2: Карточки зон (динамические)
+    const renderStep2Cards = () => {
+        const currentSelection = answers[`step_2`] || []
+        const options = OPTIONS_BY_TYPE[answers['step_1']] || QUIZ_DATA[1].options
+
+        const toggleCheck = (opt) => {
+            let newSelection = [...currentSelection]
+            if (opt === "Полностью всё помещение") {
+                if (newSelection.includes(opt)) newSelection = []
+                else newSelection = [...options]
+            } else {
+                if (newSelection.includes("Полностью всё помещение")) {
+                    newSelection = newSelection.filter(item => item !== "Полностью всё помещение")
+                }
+                if (newSelection.includes(opt)) newSelection = newSelection.filter(item => item !== opt)
+                else newSelection.push(opt)
+            }
+            handleAnswer(newSelection)
         }
 
         return (
             <div className="options-grid-step-1">
-                {QUIZ_DATA[0].options.map((opt, idx) => (
-                    <div
-                        key={idx}
-                        className={`option-card ${currentSelection === opt ? 'selected' : ''}`}
-                        onClick={() => handleAnswer(opt)}
-                    >
-                        <div className="card-image-wrapper">
-                            <img src={images[opt]} alt={opt} />
-                            {currentSelection === opt && <div className="check-overlay">✓</div>}
+                {options.map((opt, idx) => {
+                    const isChecked = currentSelection.includes(opt)
+                    return (
+                        <div key={idx} className={`option-card ${isChecked ? 'selected' : ''}`} onClick={() => toggleCheck(opt)}>
+                            <div className="card-image-wrapper">
+                                <img src={ZONE_IMAGES[opt]} alt={opt} />
+                                {isChecked && <div className="check-overlay">✓</div>}
+                            </div>
+                            <span className="card-title">{opt}</span>
                         </div>
-                        <span className="card-title">{opt}</span>
-                    </div>
-                ))}
+                    )
+                })}
             </div>
         )
     }
 
-    // Функция рендера обычных вопросов (radio, checkbox, range)
-    const renderQuestionContent = (data) => {
-        if (!data) return null
+    // Шаг 3: Ползунок с визуализацией
+    const renderStep3Range = (data) => {
+        const val = answers[`step_3`] !== undefined ? answers[`step_3`] : data.defaultValue
+        const size = 140 + (val - data.min) * ((280 - 140) / (data.max - data.min))
 
-        // Если это шаг 2 - рендерим карточки с картинками
-        if (step === 2 && data.type === 'multiple') {
-            const currentSelection = answers[`step_${step}`] || []
-
-            // Картинки для зон
-            const zoneImages = {
-                "Кухня": "https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=300&q=80",
-                "Гостиная": "https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?auto=format&fit=crop&w=300&q=80",
-                "Спальня": "https://images.unsplash.com/photo-1505693416388-b0346ef41439?auto=format&fit=crop&w=300&q=80",
-                "Детская": "https://images.unsplash.com/photo-1503435980943-918406f9ef43?auto=format&fit=crop&w=300&q=80",
-                "Санузел": "https://images.unsplash.com/photo-1552321554-5f4080a55e3c?auto=format&fit=crop&w=300&q=80",
-                "Прихожая": "https://images.unsplash.com/photo-1600590788195-e6db2e8b23ab?auto=format&fit=crop&w=300&q=80",
-                "Кабинет": "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=300&q=80",
-                "Гардеробная": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=300&q=80",
-                "Балкон / лоджия": "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=300&q=80",
-                "Полностью всё помещение": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=300&q=80"
-            }
-
-            return (
-                <div className="options-grid-step-1">
-                    {data.options.map((opt, idx) => {
-                        const isChecked = currentSelection.includes(opt)
-                        const isAllOption = (opt === "Полностью всё помещение")
-
-                        const toggleCheck = () => {
-                            let newSelection = [...currentSelection]
-
-                            if (isAllOption) {
-                                // ЛОГИКА ДЛЯ "ПОЛНОСТЬЮ ВСЁ ПОМЕЩЕНИЕ"
-                                if (isChecked) {
-                                    // Если было выбрано "всё", то снимаем ВСЕ галочки
-                                    newSelection = []
-                                } else {
-                                    // Если не было выбрано, выбираем ВСЕ пункты из списка
-                                    newSelection = [...data.options]
-                                }
-                            } else {
-                                // ЛОГИКА ДЛЯ ОБЫЧНЫХ ПУНКТОВ
-
-                                // Если сейчас выбрано "Полностью всё помещение", то при клике на
-                                // конкретный пункт нужно сначала снять галочку с "Полностью всё помещение"
-                                if (currentSelection.includes("Полностью всё помещение")) {
-                                    newSelection = newSelection.filter(item => item !== "Полностью всё помещение")
-                                }
-
-                                // Теперь переключаем конкретный пункт
-                                if (isChecked) {
-                                    newSelection = newSelection.filter(item => item !== opt)
-                                } else {
-                                    newSelection.push(opt)
-                                }
-                            }
-
-                            handleAnswer(newSelection)
-                        }
-
-                        return (
-                            <div
-                                key={idx}
-                                className={`option-card ${isChecked ? 'selected' : ''}`}
-                                onClick={toggleCheck}
-                            >
-                                <div className="card-image-wrapper">
-                                    <img src={zoneImages[opt]} alt={opt} />
-                                    {isChecked && <div className="check-overlay">✓</div>}
-                                </div>
-                                <span className="card-title">{opt}</span>
-                            </div>
-                        )
-                    })}
-                </div>
-            )
-        }
-
-        // Для остальных шагов - стандартный рендер
         return (
-            <div className="options-list">
-                {data.type === 'single' && data.options.map((opt, idx) => (
-                    <label key={idx} className="option-item">
-                        <input
-                            type="radio"
-                            name={`q_${step}`}
-                            value={opt}
-                            checked={answers[`step_${step}`] === opt}
-                            onChange={() => handleAnswer(opt)}
-                        />
-                        <span className="option-icon"></span>
-                        {opt}
-                    </label>
-                ))}
-
-                {data.type === 'multiple' && data.options.map((opt, idx) => {
-                    const currentSelection = answers[`step_${step}`] || []
-                    const isChecked = currentSelection.includes(opt)
-
-                    const toggleCheck = () => {
-                        let newSelection
-                        if (isChecked) {
-                            newSelection = currentSelection.filter(item => item !== opt)
-                        } else {
-                            newSelection = [...currentSelection, opt]
-                        }
-                        handleAnswer(newSelection)
-                    }
-
-                    return (
-                        <div key={idx} className="option-item checkbox" onClick={toggleCheck}>
-                            <input
-                                type="checkbox"
-                                checked={isChecked}
-                                onChange={() => {}}
-                            />
-                            <span className="option-icon"></span>
-                            {opt}
-                        </div>
-                    )
-                })}
-
-                {data.type === 'range' && (
-                    <div className="range-container">
-                        <span className="range-value">{answers[`step_${step}`] || data.defaultValue} м²</span>
-                        <input
-                            type="range"
-                            min={data.min}
-                            max={data.max}
-                            step={data.step}
-                            defaultValue={data.defaultValue}
-                            onChange={(e) => handleAnswer(e.target.value)}
-                        />
+            <div className="range-container">
+                <div className="area-visualizer">
+                    <div className="area-box" style={{ width: `${size}px`, height: `${size}px` }}>
+                        <span className="area-text">{val} м²</span>
                     </div>
-                )}
+                </div>
+
+                {/* Блок ползунка с подписями */}
+                <div className="slider-wrapper">
+                    <input
+                        type="range"
+                        min={data.min}
+                        max={data.max}
+                        step={data.step}
+                        value={val}
+                        onChange={(e) => handleAnswer(Number(e.target.value))}
+                    />
+                    {/* Добавьте этот блок */}
+                    <div className="slider-labels">
+                        <span>{data.min} м²</span>
+                        <span>{data.max} м²</span>
+                    </div>
+                </div>
             </div>
         )
     }
 
     return (
         <div className="page-wrapper">
-            {/* Background Content */}
+            {/* Фон сайта (размывается при открытии квиза) */}
             <div className={`page-content ${started ? 'blurred' : ''}`}>
                 <Header />
                 <div className="app-container">
@@ -442,7 +396,7 @@ function App() {
                 <Footer />
             </div>
 
-            {/* Quiz Modal Overlay */}
+            {/* Модальное окно квиза */}
             {started && (
                 <div className="quiz-overlay">
                     <div className="quiz-wrapper">
@@ -452,6 +406,7 @@ function App() {
                                 <line x1="6" y1="6" x2="18" y2="18"></line>
                             </svg>
                         </button>
+
                         {success ? (
                             <div className="success-screen">
                                 <h2 className="success-title">СПАСИБО ЗА ОТВЕТЫ!</h2>
@@ -459,46 +414,63 @@ function App() {
                                 <button className="success-btn" onClick={() => { setSuccess(false); setStarted(false); }}>ЗАКРЫТЬ</button>
                             </div>
                         ) : (
-                            <>
-                                <div className="quiz-left">
-                                    {step === 6 ? (
-                                        <>
-                                            <div className="quiz-header">Мы уже приступили к расчёту!</div>
-                                            <div className="question-title" style={{fontSize: '1.4rem'}}>Укажите ваши контактные данные</div>
-                                            <form onSubmit={handleSubmit} style={{ marginTop: '30px' }}>
-                                                <div className="form-group"><input type="text" name="name" className="form-input" placeholder="Имя" value={contactForm.name} onChange={handleContactChange} /></div>
-                                                <div className="form-group"><input type="tel" name="phone" className="form-input" placeholder="Телефон *" required value={contactForm.phone} onChange={handleContactChange} /></div>
-                                                <div className="form-group"><input type="email" name="email" className="form-input" placeholder="E-mail" value={contactForm.email} onChange={handleContactChange} /></div>
-                                                <div className="form-group"><textarea name="comment" className="form-input" rows="2" placeholder="Комментарий" value={contactForm.comment} onChange={handleContactChange} /></div>
-                                                <label className="form-checkbox"><input type="checkbox" name="agree" checked={contactForm.agree} onChange={handleContactChange} /><span>Я даю согласие на обработку персональных данных</span></label>
-                                                <div className="quiz-footer" style={{ marginTop: '30px' }}>
-                                                    <button type="button" className="btn-nav" onClick={() => setStep(5)}>← Назад</button>
-                                                    <button type="submit" className="btn-nav primary" style={{ flex: 1 }} disabled={!isFormValid()}>ОСТАВИТЬ ЗАЯВКУ</button>
-                                                </div>
-                                            </form>
-                                        </>
-                                    ) : (
-                                        <>
-                                            <div className="quiz-header">Узнайте стоимость дизайн-проекта</div>
-                                            <div className="question-title">{stepData.title}</div>
-
-                                            {/* Рендер карточек для шага 1, иначе обычный рендер */}
-                                            {step === 1 ? renderStep1Cards() : renderQuestionContent(stepData)}
-
-                                            <div className="quiz-footer">
-                                                <div className="progress-container">
-                                                    <span className="progress-text">Выполнено {step} из 5</span>
-                                                    <div className="progress-bar"><div className="progress-fill" style={{ width: `${(step / 5) * 100}%` }}></div></div>
-                                                </div>
-                                                <div className="nav-buttons">
-                                                    <button className="btn-nav" onClick={handlePrev}>{step === 1 ? '← Закрыть' : '←'}</button>
-                                                    <button className="btn-nav primary" onClick={handleNext} disabled={isNextDisabled()}>Далее</button>
-                                                </div>
+                            <div className="quiz-left">
+                                {step === 6 ? (
+                                    <>
+                                        <div className="quiz-header">Мы уже приступили к расчёту!</div>
+                                        <div className="question-title" style={{fontSize: '1.4rem'}}>Укажите ваши контактные данные</div>
+                                        <form onSubmit={handleSubmit} style={{ marginTop: '30px' }}>
+                                            <div className="form-group"><input type="text" name="name" className="form-input" placeholder="Имя" value={contactForm.name} onChange={handleContactChange} /></div>
+                                            <div className="form-group"><input type="tel" name="phone" className="form-input" placeholder="Телефон *" required value={contactForm.phone} onChange={handleContactChange} /></div>
+                                            <div className="form-group"><input type="email" name="email" className="form-input" placeholder="E-mail" value={contactForm.email} onChange={handleContactChange} /></div>
+                                            <div className="form-group"><textarea name="comment" className="form-input" rows="2" placeholder="Комментарий" value={contactForm.comment} onChange={handleContactChange} /></div>
+                                            <label className="form-checkbox"><input type="checkbox" name="agree" checked={contactForm.agree} onChange={handleContactChange} /><span>Я даю согласие на обработку персональных данных</span></label>
+                                            <div className="quiz-footer" style={{ marginTop: '30px' }}>
+                                                <button type="button" className="btn-nav" onClick={() => setStep(5)}>← Назад</button>
+                                                <button type="submit" className="btn-nav primary" style={{ flex: 1 }} disabled={!isFormValid()}>ОСТАВИТЬ ЗАЯВКУ</button>
                                             </div>
-                                        </>
-                                    )}
-                                </div>
-                            </>
+                                        </form>
+                                    </>
+                                ) : (
+                                    <>
+                                        <div className="quiz-header">Узнайте стоимость дизайн-проекта</div>
+                                        <div className="question-title">{stepData.title}</div>
+
+                                        {/* Логика рендеринга разных шагов */}
+                                        {step === 1 && renderStep1Cards()}
+                                        {step === 2 && renderStep2Cards()}
+                                        {step === 3 && renderStep3Range(stepData)}
+                                        {(step === 4 || step === 5) && (
+                                            <div className="options-list">
+                                                {stepData.options.map((opt, idx) => (
+                                                    <label key={idx} className="option-item">
+                                                        <input
+                                                            type="radio"
+                                                            name={`q_${step}`}
+                                                            value={opt}
+                                                            checked={answers[`step_${step}`] === opt}
+                                                            onChange={() => handleAnswer(opt)}
+                                                        />
+                                                        <span className="option-icon"></span>
+                                                        {opt}
+                                                    </label>
+                                                ))}
+                                            </div>
+                                        )}
+
+                                        <div className="quiz-footer">
+                                            <div className="progress-container">
+                                                <span className="progress-text">Выполнено {step} из 5</span>
+                                                <div className="progress-bar"><div className="progress-fill" style={{ width: `${(step / 5) * 100}%` }}></div></div>
+                                            </div>
+                                            <div className="nav-buttons">
+                                                <button className="btn-nav" onClick={handlePrev}>{step === 1 ? '← Закрыть' : '←'}</button>
+                                                <button className="btn-nav primary" onClick={handleNext} disabled={isNextDisabled()}>Далее</button>
+                                            </div>
+                                        </div>
+                                    </>
+                                )}
+                            </div>
                         )}
                     </div>
                 </div>

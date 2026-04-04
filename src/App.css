@@ -976,3 +976,65 @@ form .quiz-footer .btn-nav.primary {
 .footer-logo .logo-icon::before {
     color: #ffffff !important;
 }
+
+/* Обновленный блок визуализации площади */
+.area-visualizer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 320px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+/* Сам квадрат (теперь строгий, без скруглений) */
+.area-box {
+    background-color: #e8e4dd;
+    border-radius: 0;
+    border: 3px solid var(--text-main);
+    outline: 3px solid var(--text-main);
+    outline-offset: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: width 0.2s cubic-bezier(0.25, 0.8, 0.25, 1),
+    height 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+    position: relative;
+    box-shadow: none;
+
+    /* Страховка, чтобы квадрат не становился меньше 140px */
+    min-width: 140px;
+    min-height: 140px;
+}
+
+/* Текст внутри */
+.area-text {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--text-main);
+    white-space: nowrap;
+    z-index: 1; /* Чтобы текст был поверх линий */
+}
+
+/* Обертка для ползунка и подписей */
+.slider-wrapper {
+    width: 100%;
+    margin-top: 15px;
+}
+
+/* Стили для подписей 20м2 и 300м2 */
+.slider-labels {
+    display: flex;
+    justify-content: space-between; /* Разносит текст по краям */
+    width: 100%;
+    margin-top: 12px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+/* Чтобы сам ползунок тоже был на всю ширину */
+input[type="range"] {
+    width: 100%;
+    padding: 0; /* Убираем отступы браузера */
+}
