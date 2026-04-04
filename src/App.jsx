@@ -251,6 +251,12 @@ function App() {
             {started && (
                 <div className="quiz-overlay">
                     <div className="quiz-wrapper">
+                        <button className="quiz-close-btn" onClick={() => setStarted(false)} aria-label="Закрыть тест">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </button>
                         {success ? (
                             <div className="success-screen">
                                 <h2 className="success-title">СПАСИБО ЗА ОТВЕТЫ!</h2>
@@ -263,15 +269,80 @@ function App() {
                                     {step === 6 ? (
                                         <>
                                             <div className="quiz-header">Мы уже приступили к расчёту!</div>
-                                            <div className="question-title" style={{fontSize: '1.4rem'}}>Укажите ваши контактные данные</div>
+                                            <div className="question-title" style={{fontSize: '1.4rem'}}>
+                                                Укажите ваши контактные данные для получения результата расчёта и закрепления за вами персональной скидки 5%
+                                            </div>
+
                                             <form onSubmit={handleSubmit} style={{ marginTop: '30px' }}>
-                                                <div className="form-group"><input type="text" name="name" className="form-input" placeholder="Имя" value={contactForm.name} onChange={handleContactChange} /></div>
-                                                <div className="form-group"><input type="tel" name="phone" className="form-input" placeholder="Телефон *" required value={contactForm.phone} onChange={handleContactChange} /></div>
-                                                <div className="form-group"><input type="email" name="email" className="form-input" placeholder="E-mail" value={contactForm.email} onChange={handleContactChange} /></div>
-                                                <div className="form-group"><textarea name="comment" className="form-input" rows="2" placeholder="Комментарий" value={contactForm.comment} onChange={handleContactChange} /></div>
-                                                <label className="form-checkbox"><input type="checkbox" name="agree" checked={contactForm.agree} onChange={handleContactChange} /><span>Я даю согласие на обработку персональных данных</span></label>
-                                                <div style={{ marginTop: '30px' }}>
-                                                    <button type="submit" className="btn-nav primary" style={{ width: '100%', padding: '15px', fontSize: '1rem' }} disabled={!isFormValid()}>ОСТАВИТЬ ЗАЯВКУ</button>
+                                                <div className="form-group">
+                                                    <input
+                                                        type="text"
+                                                        name="name"
+                                                        className="form-input"
+                                                        placeholder="Имя"
+                                                        value={contactForm.name}
+                                                        onChange={handleContactChange}
+                                                    />
+                                                </div>
+                                                <div className="form-group">
+                                                    <input
+                                                        type="tel"
+                                                        name="phone"
+                                                        className="form-input"
+                                                        placeholder="Телефон *"
+                                                        required
+                                                        value={contactForm.phone}
+                                                        onChange={handleContactChange}
+                                                    />
+                                                </div>
+                                                <div className="form-group">
+                                                    <input
+                                                        type="email"
+                                                        name="email"
+                                                        className="form-input"
+                                                        placeholder="E-mail (необязательно)"
+                                                        value={contactForm.email}
+                                                        onChange={handleContactChange}
+                                                    />
+                                                </div>
+                                                <div className="form-group">
+                                                <textarea
+                                                    name="comment"
+                                                    className="form-input"
+                                                    rows="2"
+                                                    placeholder="Комментарий"
+                                                    value={contactForm.comment}
+                                                    onChange={handleContactChange}
+                                                />
+                                                </div>
+
+                                                <label className="form-checkbox">
+                                                    <input
+                                                        type="checkbox"
+                                                        name="agree"
+                                                        checked={contactForm.agree}
+                                                        onChange={handleContactChange}
+                                                    />
+                                                    <span>Я даю согласие на обработку персональных данных</span>
+                                                </label>
+
+                                                {/* ИЗМЕНЕННЫЙ БЛОК С КНОПКАМИ */}
+                                                <div className="quiz-footer" style={{ marginTop: '30px' }}>
+                                                    <button
+                                                        type="button"
+                                                        className="btn-nav"
+                                                        onClick={() => setStep(5)}
+                                                    >
+                                                        ← Назад
+                                                    </button>
+                                                    <button
+                                                        type="submit"
+                                                        className="btn-nav primary"
+                                                        style={{ flex: 1 }}
+                                                        disabled={!isFormValid()}
+                                                    >
+                                                        ОСТАВИТЬ ЗАЯВКУ
+                                                    </button>
                                                 </div>
                                             </form>
                                         </>
@@ -321,19 +392,6 @@ function App() {
                                         </>
                                     )}
                                 </div>
-
-                                {step !== 6 && (
-                                    <div className="quiz-right">
-                                        <div>
-                                            <div className="manager-card">
-                                                <div className="manager-avatar"></div>
-                                                <div><div className="manager-name">ОЛЕГ</div><div className="manager-role">Менеджер проекта</div></div>
-                                            </div>
-                                            <div className="manager-message">{currentData.message}</div>
-                                        </div>
-                                        <div className="discount-badge"><span className="lock-icon">🔒</span> Персональная скидка 5% на дизайн-проект</div>
-                                    </div>
-                                )}
                             </>
                         )}
                     </div>
