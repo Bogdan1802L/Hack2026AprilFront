@@ -55,37 +55,37 @@ const QUIZ_DATA = [
 
 // Картинки для типов помещений (Шаг 1)
 const TYPE_IMAGES = {
-    "Квартира": "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=300&q=80",
-    "Частный дом": "https://images.unsplash.com/photo-1518780664697-55e3ad937233?auto=format&fit=crop&w=300&q=80",
-    "Офис": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=300&q=80",
-    "Коммерческое помещение": "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=300&q=80",
-    "Студия / апартаменты": "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=300&q=80",
-    "Другое": "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=300&q=80"
+    "Квартира": "https://avatars.mds.yandex.net/i?id=146e938aa58c2681fe08ad7eb6dd12f8_l-12141618-images-thumbs&n=13",
+    "Частный дом": "https://i.pinimg.com/originals/ce/f0/67/cef067da95b8ed104d14e078b5de2081.jpg?nii=t",
+    "Офис": "https://avatars.mds.yandex.net/i?id=2da2fe12d866d8604947a39faef36237_l-5192450-images-thumbs&n=13",
+    "Коммерческое помещение": "https://i.pinimg.com/originals/d7/b8/92/d7b8928390b6dd7ae879092b420a0ed0.jpg",
+    "Студия / апартаменты": "https://qlean.ru/blog/wp-content/uploads/2021/08/toa-heftiba-FV3GConVSss-unsplash-800x400.jpg",
+    "Другое": "https://gutenix.com/demo/free/elementor/2166/wp-content/uploads/2019/02/imageGal4.png"
 }
 
 // Картинки для зон (Шаг 2)
 const ZONE_IMAGES = {
-    "Кухня": "https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=300&q=80",
-    "Гостиная": "https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?auto=format&fit=crop&w=300&q=80",
-    "Спальня": "https://images.unsplash.com/photo-1505693416388-b0346ef41439?auto=format&fit=crop&w=300&q=80",
-    "Детская": "https://images.unsplash.com/photo-1503435980943-918406f9ef43?auto=format&fit=crop&w=300&q=80",
-    "Санузел": "https://images.unsplash.com/photo-1552321554-5f4080a55e3c?auto=format&fit=crop&w=300&q=80",
-    "Прихожая": "https://images.unsplash.com/photo-1600590788195-e6db2e8b23ab?auto=format&fit=crop&w=300&q=80",
-    "Кабинет": "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=300&q=80",
-    "Гардеробная": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=300&q=80",
-    "Балкон / лоджия": "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=300&q=80",
-    "Полностью всё помещение": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=300&q=80"
+    "Кухня": "https://i.ytimg.com/vi/MkwdaqEuaAI/maxresdefault.jpg",
+    "Гостиная": "https://avatars.mds.yandex.net/i?id=f97494950d482152601002205d43596f_l-4912286-images-thumbs&n=13",
+    "Спальня": "https://i.pinimg.com/originals/e5/d5/4a/e5d54afbd5f91a27ca26bc5583903bbc.jpg?nii=t",
+    "Детская": "https://i.pinimg.com/originals/51/76/34/5176344d468a578e25838d4af4db3e95.png",
+    "Санузел": "https://i.pinimg.com/736x/0a/6c/0e/0a6c0ea9b38a61a27cc8e06c31dfae53.jpg",
+    "Прихожая": "https://avatars.mds.yandex.net/get-mpic/5086514/2a000001955ca8793246140ef69cc98c2c4e/orig",
+    "Кабинет": "https://i.pinimg.com/originals/cd/9e/53/cd9e53f3449711e06dbaca960a658ce9.jpg",
+    "Гардеробная": "https://i.pinimg.com/originals/7c/20/8e/7c208ed320460cc965db891db9b6b0ad.jpg?nii=t",
+    "Балкон / лоджия": "https://i.pinimg.com/originals/93/94/63/939463391a1a518037200d07c271ee11.png?nii=t",
+    "Полностью всё помещение": "https://www.su-re.nl/app/uploads/2021/08/banner-img-1920x1080.jpg"
 }
 
 // Картинки для стилей (Шаг 4)
 const STYLE_IMAGES = {
-    "Современный": "https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?auto=format&fit=crop&w=300&q=80",
-    "Минимализм": "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&w=300&q=80",
-    "Скандинавский": "https://images.unsplash.com/photo-1532323544230-ac8d6ce6954d?auto=format&fit=crop&w=300&q=80",
-    "Лофт": "https://images.unsplash.com/photo-1505873242700-f289a29e1e0f?auto=format&fit=crop&w=300&q=80",
-    "Неоклассика": "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=300&q=80",
-    "Классика": "https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?auto=format&fit=crop&w=300&q=80",
-    "Пока не определился": "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=300&q=80"
+    "Современный": "https://i.pinimg.com/originals/83/4a/d0/834ad0015864fc1b5e25c7561d1bba8b.png?nii=t",
+    "Минимализм": "https://avatars.mds.yandex.net/i?id=973143bbea0ad847443bb32c39a2d453_l-4234799-images-thumbs&n=13",
+    "Скандинавский": "https://images.stroistyle.com/posts/23588673-stil-skandi-v-interere-kvartiry-53.jpg",
+    "Лофт": "https://i.pinimg.com/originals/91/49/48/9149484304d9aed151f16182c994a420.png?nii=t",
+    "Неоклассика": "https://www.archrevue.ru/images/tb/4/2/2/42213/17695463659018_w1500h1500.jpg",
+    "Классика": "https://avatars.mds.yandex.net/get-turbo/3070322/2a0000017ca390a1ce03938aed6e9b99e3ec/lc_desktop_1920px_r16x9_pd20",
+    "Пока не определился": "https://gutenix.com/demo/free/elementor/2166/wp-content/uploads/2019/02/imageGal4.png"
 }
 
 // --- КОМПОНЕНТЫ СТРАНИЦЫ ---
