@@ -193,49 +193,59 @@ body {
 ========================================= */
 .house-btn {
     position: relative;
-    /* Форма домика: рамка убрана, форма задаётся только clip-path */
-    clip-path: polygon(50% 0%, 0% 40%, 0% 100%, 100% 100%, 100% 40%);
+    /* Форма домика */
+    clip-path: polygon(50% 0%, 0% 25%, 0% 100%, 100% 100%, 100% 25%);
     width: 200px;
     height: 180px;
     padding: 0;
-    border: 3px solid var(--btn-color); /* Стороны скрыты */
-    background: transparent;
+
+    /* ИЗМЕНЕНИЕ: Убираем обычный border, так как он ломается на углах */
+    border: none;
+
+    /* ИЗМЕНЕНИЕ: Добавляем фон, чтобы форма была сплошной и текст читался */
+    background-color: var(--bg-color);
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 180"><polyline points="100,0 0,45 0,180 200,180 200,45 100,0" fill="none" stroke="%231d1d1b" stroke-width="7" stroke-linejoin="miter"/></svg>');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: 0 0;
+
     cursor: pointer;
-    overflow: hidden; /* Обрезает заполнение по форме домика */
+    overflow: hidden;
     flex-shrink: 0;
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: center;
+    transition: box-shadow 0.3s ease;
 }
 
 /* Текст внутри кнопки — ВСЕГДА светлый, внизу по центру */
 .house-btn .btn-text {
     position: relative;
     z-index: 2;
-    font-size: 0.95rem;
+    font-size: 1.2rem;
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.3px;
     text-align: center;
     line-height: 1.2;
-    color: var(--bg-color); /* Всегда светло-бежевый, не меняется */
+    /* Цвет текста темный, чтобы читаться на бежевом фоне */
+    color: var(--text-main);
     white-space: nowrap;
     pointer-events: none;
-    padding: 0 15px 18px 15px;
+    padding: 0 15px;
+    transition: color 0.3s ease;
 }
 
 /* Псевдоэлемент для заполнения "как водой" — МАКСИМАЛЬНО УВЕЛИЧЕН */
 .house-btn::before {
     content: '';
     position: absolute;
-    /* Блок намеренно сделан огромным, чтобы при наклоне гарантированно перекрыть все углы */
     top: -120%;
     left: -60%;
     width: 220%;
     height: 350%;
     background: var(--btn-color);
     transform-origin: bottom left;
-    /* Старт: смещён далеко вниз, невидим */
     transform: translateY(100%) rotate(-18deg);
     transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1);
     z-index: 1;
@@ -243,9 +253,17 @@ body {
 
 /* Состояние при наведении: блок поднимается и ПОЛНОСТЬЮ заполняет дом */
 .house-btn:hover::before {
-    /* Сдвигаем вверх ровно настолько, чтобы вершина крыши оказалась внутри чёрного блока */
     transform: translateY(-15%) rotate(-18deg);
 }
+
+.house-btn:hover .btn-text {
+    color: var(--bg-color);
+}
+
+.house-btn:hover {
+    box-shadow: none;
+}
+
 
 /* Фокус для доступности (опционально) */
 .house-btn:focus-visible {
@@ -809,6 +827,10 @@ form .quiz-footer .btn-nav.primary {
     color: #fff;
 }
 
+.footer-logo .logo-icon {
+    color: #ffffff;
+}
+
 .footer-description {
     font-size: 0.95rem;
     line-height: 1.6;
@@ -1252,4 +1274,8 @@ form .quiz-footer .btn-nav.primary {
     .house-btn .btn-text {
         font-size: 0.75rem;
     }
+}
+
+.footer-logo {
+    margin-top: -9px;
 }
