@@ -142,7 +142,7 @@ function AboutSection() {
                 <h2 className="section-title">О КОМПАНИИ</h2>
                 <div className="about-content">
                     <p className="about-paragraph">
-                        VERNIKODOV — это команда профессиональных дизайнеров интерьера с многолетним опытом работы.
+                        <strong>VERNIKODOV</strong> — это команда профессиональных дизайнеров интерьера с многолетним опытом работы.
                         Мы создаем уникальные пространства, которые отражают индивидуальность наших клиентов и отвечают их образу жизни.
                     </p>
                     <p className="about-paragraph">
