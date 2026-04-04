@@ -381,7 +381,11 @@ function App() {
         return !answers[`step_${step}`];
     }
 
-    const isFormValid = () => contactForm.name && contactForm.phone && contactForm.agree
+    const isFormValid = () => {
+        // Проверяем, что номер телефона содержит ровно 11 цифр
+        const phoneDigitsOnly = contactForm.phone.replace(/\D/g, '')
+        return contactForm.name && contactForm.phone && phoneDigitsOnly.length === 11 && contactForm.agree
+    }
 
     const currentData = QUIZ_DATA.find(d => d.id === step)
     const stepData = step === 2 && answers['step_1']
