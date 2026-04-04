@@ -79,6 +79,17 @@ const ZONE_IMAGES = {
     "Полностью всё помещение": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=300&q=80"
 }
 
+// Картинки для стилей (Шаг 4)
+const STYLE_IMAGES = {
+    "Современный": "https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?auto=format&fit=crop&w=300&q=80",
+    "Минимализм": "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&w=300&q=80",
+    "Скандинавский": "https://images.unsplash.com/photo-1532323544230-ac8d6ce6954d?auto=format&fit=crop&w=300&q=80",
+    "Лофт": "https://images.unsplash.com/photo-1505873242700-f289a29e1e0f?auto=format&fit=crop&w=300&q=80",
+    "Неоклассика": "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=300&q=80",
+    "Классика": "https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?auto=format&fit=crop&w=300&q=80",
+    "Пока не определился": "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=300&q=80"
+}
+
 // --- КОМПОНЕНТЫ СТРАНИЦЫ ---
 
 function Header() {
@@ -244,9 +255,7 @@ function App() {
         else setStep(6)
     }
 
-    const handleAnswer = (value) => {
-        setAnswers(prev => ({ ...prev, [`step_${step}`]: value }))
-    }
+    const handleAnswer = (value) => setAnswers(prev => ({ ...prev, [`step_${step}`]: value }))
 
     const handleContactChange = (e) => {
         const { name, value, type, checked } = e.target
@@ -359,8 +368,6 @@ function App() {
                         <span className="area-text">{val} м²</span>
                     </div>
                 </div>
-
-                {/* Блок ползунка с подписями */}
                 <div className="slider-wrapper">
                     <input
                         type="range"
@@ -370,7 +377,6 @@ function App() {
                         value={val}
                         onChange={(e) => handleAnswer(Number(e.target.value))}
                     />
-                    {/* Добавьте этот блок */}
                     <div className="slider-labels">
                         <span>{data.min} м²</span>
                         <span>{data.max} м²</span>
@@ -379,6 +385,25 @@ function App() {
             </div>
         )
     }
+
+    // Шаг 4: Карточки стилей
+    const renderStep4Cards = () => (
+        <div className="options-grid-step-1">
+            {QUIZ_DATA[3].options.map((opt, idx) => (
+                <div
+                    key={idx}
+                    className={`option-card ${answers['step_4'] === opt ? 'selected' : ''}`}
+                    onClick={() => handleAnswer(opt)}
+                >
+                    <div className="card-image-wrapper">
+                        <img src={STYLE_IMAGES[opt]} alt={opt} />
+                        {answers['step_4'] === opt && <div className="check-overlay">✓</div>}
+                    </div>
+                    <span className="card-title">{opt}</span>
+                </div>
+            ))}
+        </div>
+    )
 
     return (
         <div className="page-wrapper">
@@ -399,7 +424,7 @@ function App() {
             {/* Модальное окно квиза */}
             {started && (
                 <div className="quiz-overlay">
-                    <div className="quiz-wrapper">
+                    <div className={`quiz-wrapper ${success ? 'success-mode' : ''}`}>
                         <button className="quiz-close-btn" onClick={() => setStarted(false)} aria-label="Закрыть тест">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                 <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -410,37 +435,62 @@ function App() {
                         {success ? (
                             <div className="success-screen">
                                 <h2 className="success-title">СПАСИБО ЗА ОТВЕТЫ!</h2>
-                                <p>В ближайшее время с вами свяжется наш специалист.</p>
+                                <p>Ваша заявка отправлена. Мы свяжемся с вами в ближайшее время.</p>
                                 <button className="success-btn" onClick={() => { setSuccess(false); setStarted(false); }}>ЗАКРЫТЬ</button>
                             </div>
                         ) : (
                             <div className="quiz-left">
                                 {step === 6 ? (
+                                    // === ШАГ 6: ФОРМА ===
                                     <>
-                                        <div className="quiz-header">Мы уже приступили к расчёту!</div>
-                                        <div className="question-title" style={{fontSize: '1.4rem'}}>Укажите ваши контактные данные</div>
-                                        <form onSubmit={handleSubmit} style={{ marginTop: '30px' }}>
-                                            <div className="form-group"><input type="text" name="name" className="form-input" placeholder="Имя" value={contactForm.name} onChange={handleContactChange} /></div>
-                                            <div className="form-group"><input type="tel" name="phone" className="form-input" placeholder="Телефон *" required value={contactForm.phone} onChange={handleContactChange} /></div>
-                                            <div className="form-group"><input type="email" name="email" className="form-input" placeholder="E-mail" value={contactForm.email} onChange={handleContactChange} /></div>
-                                            <div className="form-group"><textarea name="comment" className="form-input" rows="2" placeholder="Комментарий" value={contactForm.comment} onChange={handleContactChange} /></div>
-                                            <label className="form-checkbox"><input type="checkbox" name="agree" checked={contactForm.agree} onChange={handleContactChange} /><span>Я даю согласие на обработку персональных данных</span></label>
-                                            <div className="quiz-footer" style={{ marginTop: '30px' }}>
-                                                <button type="button" className="btn-nav" onClick={() => setStep(5)}>← Назад</button>
-                                                <button type="submit" className="btn-nav primary" style={{ flex: 1 }} disabled={!isFormValid()}>ОСТАВИТЬ ЗАЯВКУ</button>
+                                        <div className="quiz-header">МЫ УЖЕ ПРИСТУПИЛИ К РАСЧЁТУ!</div>
+                                        <div className="question-title">
+                                            Укажите ваши контактные данные для получения результата расчёта
+                                        </div>
+                                        <form onSubmit={handleSubmit}>
+                                            <div className="form-group">
+                                                <input type="text" name="name" className="form-input" placeholder="Имя" value={contactForm.name} onChange={handleContactChange} />
+                                            </div>
+                                            <div className="form-group">
+                                                <input type="tel" name="phone" className="form-input" placeholder="Телефон *" required value={contactForm.phone} onChange={handleContactChange} />
+                                            </div>
+                                            <div className="form-group">
+                                                <input type="email" name="email" className="form-input" placeholder="E-mail (необязательно)" value={contactForm.email} onChange={handleContactChange} />
+                                            </div>
+                                            <div className="form-group">
+                                                <textarea name="comment" className="form-input" rows="2" placeholder="Комментарий" value={contactForm.comment} onChange={handleContactChange} />
+                                            </div>
+                                            <label className="form-checkbox">
+                                                <input type="checkbox" name="agree" checked={contactForm.agree} onChange={handleContactChange} />
+                                                <span>Я даю согласие на обработку персональных данных</span>
+                                            </label>
+
+                                            {/* ПОЛЗОНОК ШАГОВ ДЛЯ ФОРМЫ */}
+                                            <div className="progress-container" style={{ marginTop: '30px' }}>
+                                                <span className="progress-text">Шаг 6 из 6</span>
+                                                <div className="progress-bar">
+                                                    <div className="progress-fill" style={{ width: '100%' }}></div>
+                                                </div>
+                                            </div>
+
+                                            <div className="quiz-footer" style={{ marginTop: '15px' }}>
+                                                <button type="button" className="btn-nav" onClick={() => setStep(5)}>← НАЗАД</button>
+                                                <button type="submit" className="btn-nav primary" disabled={!isFormValid()}>ПОЛУЧИТЬ КОНСУЛЬТАЦИЮ</button>
                                             </div>
                                         </form>
                                     </>
                                 ) : (
+                                    // === ШАГИ 1-5 ===
                                     <>
-                                        <div className="quiz-header">Узнайте стоимость дизайн-проекта</div>
+                                        <div className="quiz-header">УЗНАЙТЕ СТОИМОСТЬ ДИЗАЙН-ПРОЕКТА</div>
                                         <div className="question-title">{stepData.title}</div>
 
-                                        {/* Логика рендеринга разных шагов */}
                                         {step === 1 && renderStep1Cards()}
                                         {step === 2 && renderStep2Cards()}
                                         {step === 3 && renderStep3Range(stepData)}
-                                        {(step === 4 || step === 5) && (
+                                        {step === 4 && renderStep4Cards()}
+
+                                        {step === 5 && (
                                             <div className="options-list">
                                                 {stepData.options.map((opt, idx) => (
                                                     <label key={idx} className="option-item">
@@ -458,14 +508,17 @@ function App() {
                                             </div>
                                         )}
 
+                                        {/* ПОЛЗОНОК ШАГОВ ДЛЯ ОБЫЧНЫХ ВОПРОСОВ */}
                                         <div className="quiz-footer">
                                             <div className="progress-container">
-                                                <span className="progress-text">Выполнено {step} из 5</span>
-                                                <div className="progress-bar"><div className="progress-fill" style={{ width: `${(step / 5) * 100}%` }}></div></div>
+                                                <span className="progress-text">Шаг {step} из 6</span>
+                                                <div className="progress-bar">
+                                                    <div className="progress-fill" style={{ width: `${(step / 6) * 100}%` }}></div>
+                                                </div>
                                             </div>
                                             <div className="nav-buttons">
                                                 <button className="btn-nav" onClick={handlePrev}>{step === 1 ? '← Закрыть' : '←'}</button>
-                                                <button className="btn-nav primary" onClick={handleNext} disabled={isNextDisabled()}>Далее</button>
+                                                <button className="btn-nav primary" onClick={handleNext} disabled={isNextDisabled()}>ДАЛЕЕ</button>
                                             </div>
                                         </div>
                                     </>

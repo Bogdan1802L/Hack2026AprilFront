@@ -1038,3 +1038,49 @@ input[type="range"] {
     width: 100%;
     padding: 0; /* Убираем отступы браузера */
 }
+
+/* Компактный режим для экрана "Спасибо" */
+.quiz-wrapper.success-mode {
+    min-height: auto; /* Убираем фиксированную высоту */
+    height: auto;     /* Высота по содержимому */
+    max-height: 80vh; /* Чтобы не уезжало за пределы экрана на ноутбуках */
+}
+
+.success-screen {
+    padding: 60px 40px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px; /* Расстояние между заголовком, текстом и кнопкой */
+}
+
+.success-title {
+    font-size: 2.2rem; /* Чуть меньше заголовок */
+    font-weight: 900;
+    margin-bottom: 0;
+    line-height: 1.1;
+}
+
+.success-text {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+.success-btn {
+    background: var(--btn-color);
+    color: #fff;
+    padding: 14px 40px;
+    border: none;
+    font-weight: 700;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-size: 0.95rem;
+    transition: 0.2s;
+}
+
+.success-btn:hover {
+    background: var(--btn-hover);
+}
