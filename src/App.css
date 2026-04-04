@@ -1,4 +1,5 @@
 /* src/App.css */
+
 /* =========================================
    1. IMPORTS & VARIABLES
 ========================================= */
@@ -37,7 +38,6 @@ body {
     line-height: 1.5;
 }
 
-/* Page Wrapper for Modal Blur Effect */
 .page-wrapper {
     position: relative;
     min-height: 100vh;
@@ -162,35 +162,95 @@ body {
     padding: 40px 20px;
 }
 
+/* --- START SCREEN LAYOUT --- */
 .start-screen {
-    text-align: center;
-    max-width: 700px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+    max-width: 1100px;
+    width: 100%;
+    padding: 0 20px;
+}
+
+.start-content {
+    flex: 1;
+    text-align: left;
 }
 
 .start-title {
-    font-size: 3rem;
+    font-size: 2.6rem;
     font-weight: 900;
-    line-height: 1.1;
-    margin-bottom: 30px;
+    line-height: 1.15;
+    margin: 0;
     text-transform: uppercase;
     letter-spacing: -1px;
+    color: var(--text-main);
 }
 
-.start-btn {
-    background: var(--btn-color);
-    color: #fff;
-    padding: 18px 50px;
-    border: none;
-    border-radius: 50px;
-    font-size: 1.2rem;
-    font-weight: 700;
+/* =========================================
+   HOUSE-SHAPED BUTTON — NO BORDER + FULL FILL
+========================================= */
+.house-btn {
+    position: relative;
+    /* Форма домика: рамка убрана, форма задаётся только clip-path */
+    clip-path: polygon(50% 0%, 0% 40%, 0% 100%, 100% 100%, 100% 40%);
+    width: 200px;
+    height: 180px;
+    padding: 0;
+    border: 3px solid var(--btn-color); /* Стороны скрыты */
+    background: transparent;
     cursor: pointer;
-    transition: 0.3s;
+    overflow: hidden; /* Обрезает заполнение по форме домика */
+    flex-shrink: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
 }
 
-.start-btn:hover {
-    background: var(--btn-hover);
-    transform: scale(1.05);
+/* Текст внутри кнопки — ВСЕГДА светлый, внизу по центру */
+.house-btn .btn-text {
+    position: relative;
+    z-index: 2;
+    font-size: 0.95rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    text-align: center;
+    line-height: 1.2;
+    color: var(--bg-color); /* Всегда светло-бежевый, не меняется */
+    white-space: nowrap;
+    pointer-events: none;
+    padding: 0 15px 18px 15px;
+}
+
+/* Псевдоэлемент для заполнения "как водой" — МАКСИМАЛЬНО УВЕЛИЧЕН */
+.house-btn::before {
+    content: '';
+    position: absolute;
+    /* Блок намеренно сделан огромным, чтобы при наклоне гарантированно перекрыть все углы */
+    top: -120%;
+    left: -60%;
+    width: 220%;
+    height: 350%;
+    background: var(--btn-color);
+    transform-origin: bottom left;
+    /* Старт: смещён далеко вниз, невидим */
+    transform: translateY(100%) rotate(-18deg);
+    transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+    z-index: 1;
+}
+
+/* Состояние при наведении: блок поднимается и ПОЛНОСТЬЮ заполняет дом */
+.house-btn:hover::before {
+    /* Сдвигаем вверх ровно настолько, чтобы вершина крыши оказалась внутри чёрного блока */
+    transform: translateY(-15%) rotate(-18deg);
+}
+
+/* Фокус для доступности (опционально) */
+.house-btn:focus-visible {
+    outline: 3px solid var(--text-main);
+    outline-offset: 4px;
 }
 
 /* =========================================
@@ -224,14 +284,12 @@ body {
     border-radius: 12px;
 }
 
-/* Compact mode for success screen */
 .quiz-wrapper.success-mode {
     min-height: auto;
     height: auto;
     max-height: 80vh;
 }
 
-/* Close Button */
 .quiz-close-btn {
     position: absolute;
     top: 20px;
@@ -261,15 +319,14 @@ body {
     height: 24px;
 }
 
-/* Quiz Content Area */
 .quiz-left {
     flex: 1;
     padding: 60px 80px;
     display: flex;
     flex-direction: column;
     width: 100%;
-    overflow-y: auto; /* Включаем скролл внутри контента */
-    -webkit-overflow-scrolling: touch; /* Плавный скролл на iOS */
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .quiz-header {
@@ -289,7 +346,6 @@ body {
     letter-spacing: -0.5px;
 }
 
-/* Quiz Options */
 .options-list {
     display: flex;
     flex-direction: column;
@@ -354,7 +410,6 @@ body {
     top: 48%;
 }
 
-/* === STYLES FOR STEP 1 CARDS === */
 .options-grid-step-1 {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -428,7 +483,6 @@ body {
     background: #fff;
 }
 
-/* Range Slider */
 .range-container {
     padding: 20px 0;
 }
@@ -463,7 +517,6 @@ input[type="range"]::-webkit-slider-runnable-track {
     background: var(--text-main);
 }
 
-/* Form Inputs */
 .form-group {
     margin-bottom: 20px;
 }
@@ -495,7 +548,6 @@ input[type="range"]::-webkit-slider-runnable-track {
     margin-top: 3px;
 }
 
-/* Quiz Footer & Buttons */
 .quiz-footer {
     display: flex;
     align-items: center;
@@ -529,7 +581,6 @@ input[type="range"]::-webkit-slider-runnable-track {
     cursor: not-allowed;
 }
 
-/* Form Footer Specifics */
 form .quiz-footer {
     display: flex;
     gap: 15px;
@@ -546,7 +597,6 @@ form .quiz-footer .btn-nav.primary {
     width: 100%;
 }
 
-/* Progress Bar */
 .progress-container {
     display: flex;
     align-items: center;
@@ -580,7 +630,6 @@ form .quiz-footer .btn-nav.primary {
     gap: 10px;
 }
 
-/* Success Screen */
 .success-screen {
     text-align: center;
     padding: 80px 40px;
@@ -967,7 +1016,7 @@ form .quiz-footer .btn-nav.primary {
     }
     .quiz-overlay {
         padding: 15px;
-        align-items: flex-start; /* Start from top on mobile */
+        align-items: flex-start;
         padding-top: 40px;
     }
     .quiz-wrapper {
@@ -975,8 +1024,8 @@ form .quiz-footer .btn-nav.primary {
         min-height: auto;
         width: 100%;
         height: auto;
-        max-height: 90vh; /* Limit height to screen */
-        overflow: hidden; /* Hide overflow of wrapper */
+        max-height: 90vh;
+        overflow: hidden;
     }
     .quiz-close-btn {
         top: 15px;
@@ -985,8 +1034,8 @@ form .quiz-footer .btn-nav.primary {
         height: 38px;
     }
     .quiz-left {
-        padding: 30px 20px 100px 20px; /* Padding bottom for footer space */
-        overflow-y: auto; /* Enable scrolling inside content */
+        padding: 30px 20px 100px 20px;
+        overflow-y: auto;
         -webkit-overflow-scrolling: touch;
     }
     .start-title {
@@ -995,8 +1044,6 @@ form .quiz-footer .btn-nav.primary {
     .options-grid-step-1 {
         grid-template-columns: repeat(2, 1fr);
     }
-
-    /* Sticky Footer for Mobile */
     .quiz-footer {
         position: sticky;
         bottom: 0;
@@ -1006,6 +1053,15 @@ form .quiz-footer .btn-nav.primary {
         z-index: 10;
         margin-top: auto;
     }
+    /* Адаптация кнопки-домика для планшета */
+    .house-btn {
+        align-self: center;
+        width: 180px;
+        height: 160px;
+    }
+    .house-btn .btn-text {
+        font-size: 0.9rem;
+    }
 }
 
 /* Mobile */
@@ -1013,43 +1069,33 @@ form .quiz-footer .btn-nav.primary {
     .content-section {
         padding: 50px 20px;
     }
-
     .section-title {
         font-size: 1.8rem;
         margin-bottom: 30px;
     }
-
     .services-grid {
         grid-template-columns: 1fr;
     }
-
     .about-features {
         flex-direction: column;
         gap: 30px;
     }
-
     .footer-top {
         grid-template-columns: 1fr;
         gap: 40px;
     }
-
     .footer-bottom {
         flex-direction: column;
         text-align: center;
         gap: 15px;
     }
-
     .options-grid-step-1 {
         grid-template-columns: 1fr;
     }
-
-    /* FIX FOR MOBILE NAVIGATION */
     .quiz-overlay {
         padding: 0;
         align-items: flex-start;
     }
-
-    /* Для обычных шагов - на всю высоту */
     .quiz-wrapper {
         width: 100%;
         max-width: 100%;
@@ -1060,14 +1106,11 @@ form .quiz-footer .btn-nav.primary {
         display: flex;
         flex-direction: column;
     }
-
-    /* Для экрана успеха - тоже на всю высоту, но с центрированием */
     .quiz-wrapper.success-mode {
         height: 100vh;
         max-height: 100vh;
         justify-content: center;
     }
-
     .quiz-close-btn {
         position: absolute;
         top: 15px;
@@ -1077,18 +1120,14 @@ form .quiz-footer .btn-nav.primary {
         background: rgba(255,255,255,0.9);
         z-index: 1000;
     }
-
-    /* Для обычных шагов — большой отступ снизу */
     .quiz-left {
         flex: 1;
-        padding: 70px 15px 280px 15px; /* Увеличили с 140px до 280px */
+        padding: 70px 15px 280px 15px;
         display: flex;
         flex-direction: column;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
     }
-
-    /* Для экрана успеха - центрируем контент и убираем лишние отступы */
     .quiz-wrapper.success-mode .quiz-left {
         padding: 40px 20px;
         justify-content: center;
@@ -1098,13 +1137,10 @@ form .quiz-footer .btn-nav.primary {
         height: 100vh;
         overflow: hidden;
     }
-
     .question-title {
         font-size: 1.6rem;
         margin-bottom: 25px;
     }
-
-    /* Make footer fixed at bottom on mobile */
     .quiz-footer {
         position: fixed;
         bottom: 0;
@@ -1119,12 +1155,9 @@ form .quiz-footer .btn-nav.primary {
         flex-direction: column;
         gap: 10px;
     }
-
-    /* Скрываем футер на экране успеха */
     .quiz-wrapper.success-mode .quiz-footer {
         display: none;
     }
-
     .progress-container {
         flex-direction: column;
         align-items: flex-start;
@@ -1133,47 +1166,37 @@ form .quiz-footer .btn-nav.primary {
         margin-bottom: 5px;
         width: 100%;
     }
-
     .progress-text {
         font-size: 0.75rem;
     }
-
     .nav-buttons {
         width: 100%;
         flex-direction: row;
         gap: 10px;
         display: flex;
     }
-
     .btn-nav {
         padding: 14px 20px;
         font-size: 0.9rem;
         flex: 1;
     }
-
     .btn-nav.primary {
         flex: 2;
     }
-
     form .quiz-footer .btn-nav.primary {
         flex: 1;
     }
-
     .quiz-header {
         font-size: 0.8rem;
         margin-bottom: 15px;
     }
-
     .card-image-wrapper {
         height: 140px;
     }
-
     .card-title {
         padding: 12px 8px;
         font-size: 0.95rem;
     }
-
-    /* Стили для экрана успеха на мобильных */
     .success-screen {
         padding: 40px 20px;
         text-align: center;
@@ -1185,22 +1208,48 @@ form .quiz-footer .btn-nav.primary {
         min-height: auto;
         height: 100%;
     }
-
     .success-title {
         font-size: 1.8rem;
         margin-bottom: 20px;
         text-align: center;
     }
-
     .success-screen p {
         font-size: 1rem;
         margin-bottom: 30px;
         text-align: center;
         line-height: 1.5;
     }
-
     .success-btn {
         padding: 14px 40px;
         font-size: 0.95rem;
+    }
+    /* Адаптация кнопки-домика для мобильных */
+    .start-screen {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 30px;
+        text-align: center;
+    }
+    .start-content {
+        text-align: center;
+    }
+    .house-btn {
+        align-self: center;
+        width: 160px;
+        height: 145px;
+    }
+    .house-btn .btn-text {
+        font-size: 0.85rem;
+    }
+}
+
+/* Extra Small Mobile */
+@media (max-width: 480px) {
+    .house-btn {
+        width: 140px;
+        height: 125px;
+    }
+    .house-btn .btn-text {
+        font-size: 0.75rem;
     }
 }

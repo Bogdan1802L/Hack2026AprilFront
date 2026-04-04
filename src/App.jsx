@@ -89,6 +89,7 @@ const STYLE_IMAGES = {
 }
 
 // --- КОМПОНЕНТЫ СТРАНИЦЫ ---
+
 function Header() {
     const handleLogoClick = () => window.scrollTo({ top: 0, behavior: 'smooth' })
     return (
@@ -97,13 +98,8 @@ function Header() {
                 <div className="header-top">
                     <div className="logo" onClick={handleLogoClick} style={{ cursor: 'pointer' }}>
                         <span className="logo-icon">✦</span>
-                        VERNIKODOV
+                        <span className="logo-text">VERNIKODOV</span>
                     </div>
-                    <nav className="main-nav">
-                        <a href="#services" className="nav-link">Услуги</a>
-                        <a href="#about" className="nav-link">О компании</a>
-                        <a href="#contacts" className="nav-link">Контакты</a>
-                    </nav>
                     <div className="header-contact">
                         <a href="tel:+79999999999" className="phone-link">+7 (999) 999-99-99</a>
                         <span className="work-hours">9:00–20:00</span>
@@ -123,6 +119,7 @@ function ServicesSection() {
         { title: 'Авторский надзор', description: 'Контроль за реализацией дизайн-проекта на всех этапах ремонтных работ' },
         { title: 'Комплектация объекта', description: 'Подбор и закупка отделочных материалов, мебели и декора' }
     ]
+
     return (
         <section id="services" className="content-section">
             <div className="section-container">
@@ -146,21 +143,18 @@ function AboutSection() {
             <div className="section-container">
                 <h2 className="section-title">О КОМПАНИИ</h2>
                 <div className="about-content">
-                    <p className="about-paragraph">VERNIKODOV — это команда профессиональных дизайнеров интерьера с многолетним опытом работы.</p>
-                    <p className="about-paragraph">Мы создаем уникальные пространства, которые отражают индивидуальность наших клиентов и отвечают их образу жизни.</p>
-                    <p className="about-paragraph">За годы работы мы реализовали более 500 проектов различной сложности — от небольших студий до просторных загородных домов и коммерческих объектов.</p>
-                    <div className="about-features">
-                        <div className="feature-item">
-                            <span className="feature-number">500+</span>
-                            <span className="feature-label">Реализованных проектов</span>
-                        </div>
-                        <div className="feature-item">
-                            <span className="feature-number">10</span>
-                            <span className="feature-label">Лет на рынке</span>
-                        </div>
-                        <div className="feature-item">
-                            <span className="feature-number">50+</span>
-                            <span className="feature-label">Наград и премий</span>
+                    <div className="about-text">
+                        <p className="about-paragraph">
+                            <strong>VERNIKODOV</strong> — это команда профессиональных дизайнеров интерьера с многолетним опытом работы.
+                            Мы создаем уникальные пространства, которые отражают индивидуальность наших клиентов и отвечают их образу жизни.
+                        </p>
+                        <p className="about-paragraph">
+                            За годы работы мы реализовали более 500 проектов различной сложности — от небольших студий до просторных загородных домов и коммерческих объектов.
+                        </p>
+                        <div className="about-features">
+                            <div className="feature-item"><span className="feature-number">500+</span><span className="feature-label">Реализованных проектов</span></div>
+                            <div className="feature-item"><span className="feature-number">10</span><span className="feature-label">Лет на рынке</span></div>
+                            <div className="feature-item"><span className="feature-number">50+</span><span className="feature-label">Наград и премий</span></div>
                         </div>
                     </div>
                 </div>
@@ -171,18 +165,23 @@ function AboutSection() {
 
 function Footer() {
     return (
-        <footer id="contacts" className="site-footer">
+        <footer className="site-footer">
             <div className="footer-container">
                 <div className="footer-top">
                     <div className="footer-column">
                         <div className="footer-logo">
-                            <span>✦</span>
-                            VERNIKODOV
+                            <span className="logo-icon">✦</span>
+                            <span className="logo-text">VERNIKODOV</span>
                         </div>
                         <p className="footer-description">Профессиональные дизайнеры интерьера. Создаем уникальные пространства с 2014 года.</p>
+                        <div className="footer-socials">
+                            <a href="#" className="social-link" aria-label="Telegram"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></a>
+                            <a href="#" className="social-link" aria-label="WhatsApp"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg></a>
+                            <a href="#" className="social-link" aria-label="Instagram"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+                        </div>
                     </div>
                     <div className="footer-column">
-                        <h3 className="footer-title">Навигация</h3>
+                        <h4 className="footer-title">Навигация</h4>
                         <ul className="footer-links">
                             <li><a href="#services" className="footer-link">Услуги</a></li>
                             <li><a href="#about" className="footer-link">О компании</a></li>
@@ -192,35 +191,23 @@ function Footer() {
                         </ul>
                     </div>
                     <div className="footer-column">
-                        <h3 className="footer-title">Контакты</h3>
+                        <h4 className="footer-title">Контакты</h4>
                         <ul className="footer-contact-list">
-                            <li className="footer-contact-item">
-                                <span className="contact-label">Телефон</span>
-                                <a href="tel:+79999999999" className="contact-link">+7 (999) 999-99-99</a>
-                            </li>
-                            <li className="footer-contact-item">
-                                <span className="contact-label">E-mail</span>
-                                <a href="mailto:info@vernikodov.ru" className="contact-link">info@vernikodov.ru</a>
-                            </li>
-                            <li className="footer-contact-item">
-                                <span className="contact-label">Адрес</span>
-                                <span className="contact-text">г. Москва, ул. Примерная, д. 123</span>
-                            </li>
-                            <li className="footer-contact-item">
-                                <span className="contact-label">Режим работы</span>
-                                <span className="contact-text">Пн-Пт: 9:00–20:00</span>
-                            </li>
+                            <li className="footer-contact-item"><span className="contact-label">Телефон:</span><a href="tel:+79999999999" className="contact-link">+7 (999) 999-99-99</a></li>
+                            <li className="footer-contact-item"><span className="contact-label">E-mail:</span><a href="mailto:info@vernikodov.ru" className="contact-link">info@vernikodov.ru</a></li>
+                            <li className="footer-contact-item"><span className="contact-label">Адрес:</span><span className="contact-text">г. Москва, ул. Примерная, д. 123</span></li>
+                            <li className="footer-contact-item"><span className="contact-label">Режим работы:</span><span className="contact-text">Пн-Пт: 9:00–20:00</span></li>
                         </ul>
                     </div>
                 </div>
                 <div className="footer-bottom">
-                    <p className="copyright">© 2014–{new Date().getFullYear()} VERNIKODOV. Все права защищены.</p>
-                    <a href="/admin" className="admin-link">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style={{marginRight: '8px'}}>
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
-                        </svg>
-                        Админ-панель
-                    </a>
+                    <div className="footer-bottom-left"><p className="copyright">© 2014–{new Date().getFullYear()} VERNIKODOV. Все права защищены.</p></div>
+                    <div className="footer-bottom-right">
+                        <a href="/admin" className="admin-link">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style={{marginRight: '8px'}}><path d="M19.14 12.94c.04-.31.06-.63.06-.94 0-.31-.02-.63-.06-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+                            Админ-панель
+                        </a>
+                    </div>
                 </div>
             </div>
         </footer>
@@ -228,13 +215,13 @@ function Footer() {
 }
 
 // --- ОСНОВНОЙ КОМПОНЕНТ ПРИЛОЖЕНИЯ ---
+
 function App() {
     const [started, setStarted] = useState(false)
     const [step, setStep] = useState(1)
     const [answers, setAnswers] = useState({})
     const [contactForm, setContactForm] = useState({ name: '', phone: '', email: '', comment: '', agree: false })
     const [success, setSuccess] = useState(false)
-    const [loading, setLoading] = useState(false) // ИЗМЕНЕНИЕ: состояние загрузки
     const phoneInputRef = useRef(null)
 
     // Блокировка скролла при открытом квизе
@@ -266,11 +253,16 @@ function App() {
 
     const handleContactChange = (e) => {
         const { name, value, type, checked } = e.target;
+
         let finalValue = value;
 
+        // Если это поле имени - убираем всё кроме букв и пробелов
         if (name === 'name') {
+            // Разрешаем только буквы (кириллица и латиница), пробелы и апостроф
             finalValue = value.replace(/[^a-zA-Zа-яА-ЯёЁ\s']/g, '');
         }
+
+        // Если это поле телефона, применяем маску
         if (name === 'phone') {
             if (value === '') {
                 finalValue = '';
@@ -286,38 +278,68 @@ function App() {
     };
 
     const handlePhoneKeyDown = (e) => {
+        // Если нажата Backspace или Delete, позволяем стирать
         if (e.key === 'Backspace' || e.key === 'Delete') {
             const input = e.target;
             const currentValue = input.value;
             const cursorPos = input.selectionStart;
 
-            if (input.selectionStart !== input.selectionEnd) return;
+            // Если есть выделение, просто удалим и переформатируем
+            if (input.selectionStart !== input.selectionEnd) {
+                return;
+            }
 
+            // Для backspace: удаляем символ перед курсором
             if (e.key === 'Backspace' && cursorPos > 0) {
                 const before = currentValue.substring(0, cursorPos - 1);
                 const after = currentValue.substring(cursorPos);
                 const newValue = before + after;
+
+                // Обновляем форму напрямую с неотформатированным значением
                 const numbersOnly = newValue.replace(/\D/g, '');
 
                 if (numbersOnly.length === 0) {
                     setContactForm(prev => ({ ...prev, phone: '' }));
                 } else {
+                    // Отправляем на форматирование
                     const formatted = formatPhone(newValue);
                     setContactForm(prev => ({ ...prev, phone: formatted }));
-                    setTimeout(() => { input.selectionStart = input.selectionEnd = cursorPos - 1; }, 0);
+
+                    // Устанавливаем позицию курсора после переформатирования
+                    setTimeout(() => {
+                        input.selectionStart = input.selectionEnd = cursorPos - 1;
+                    }, 0);
                 }
+
                 e.preventDefault();
             }
         }
     };
 
+    // Функция форматирования телефона
     const formatPhone = (value) => {
+        // 1. Оставляем только цифры
         let numbers = value.replace(/\D/g, '');
-        if (numbers.length === 0) return '';
-        if (numbers[0] === '8') numbers = '7' + numbers.substring(1);
-        if (numbers[0] !== '7') numbers = '7' + numbers;
+
+        // Если нет цифр, возвращаем пустую строку
+        if (numbers.length === 0) {
+            return '';
+        }
+
+        // 2. Если первая цифра 8, меняем на 7
+        if (numbers[0] === '8') {
+            numbers = '7' + numbers.substring(1);
+        }
+
+        // 3. Если не начинается с 7, добавляем 7
+        if (numbers[0] !== '7') {
+            numbers = '7' + numbers;
+        }
+
+        // 4. Ограничиваем до 11 цифр максимум
         numbers = numbers.substring(0, 11);
 
+        // 5. Собираем отформатированную строку: +7 (999) 999 99 99
         let formatted = '';
         if (numbers.length > 0) formatted = '+7';
         if (numbers.length > 1) formatted += ' (' + numbers.substring(1, 4);
@@ -329,74 +351,52 @@ function App() {
         return formatted;
     };
 
-    // ИЗМЕНЕНИЕ: Асинхронная отправка данных на бэкенд
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault()
         if (!contactForm.name || !contactForm.phone || !contactForm.agree) {
             alert('Пожалуйста, укажите ваше имя, заполните телефон и дайте согласие на обработку данных.')
             return
         }
-
-        setLoading(true)
-
-        // Извлекаем UTM метки из URL
-        const params = new URLSearchParams(window.location.search)
-        const utm_source = params.get('utm_source') || ''
-
-        // Формируем payload строго по требованиям бэкенда
-        const payload = {
-            name: contactForm.name,
-            phone: contactForm.phone,
-            email: contactForm.email || '',
-            comment: contactForm.comment || '',
-            room_type: answers['step_1'] || '',
-            zones: answers['step_2'] || [],
-            area: answers['step_3'] || 60,
-            style: answers['step_4'] || '',
-            budget: answers['step_5'] || '',
-            utm_source: utm_source
+        // Сбор данных
+        const finalData = {
+            ...answers,
+            step_3: answers['step_3'] || 60,
+            contact: contactForm,
+            timestamp: new Date().toISOString()
         }
-
-        try {
-            const response = await fetch('http://localhost:8000/quiz/result', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            })
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`)
-            }
-
-            setSuccess(true)
-        } catch (error) {
-            console.error('Ошибка при отправке данных:', error)
-            alert('Произошла ошибка при отправке заявки. Пожалуйста, попробуйте позже или свяжитесь с нами по телефону.')
-        } finally {
-            setLoading(false)
-        }
+        console.log('SUBMITTING DATA:', finalData)
+        setTimeout(() => setSuccess(true), 500)
     }
 
+    // Валидация кнопки "Далее"
     const isNextDisabled = () => {
         if (step === 2) {
             const val = answers[`step_${step}`];
             return !val || val.length === 0;
         }
-        if (step === 3) return false;
+        if (step === 3) return false; // Ползунок всегда валиден
         return !answers[`step_${step}`];
     }
 
     const isFormValid = () => contactForm.name && contactForm.phone && contactForm.agree
 
+    // Текущие данные квиза с учетом динамики (Шаг 2 зависит от Шага 1)
     const currentData = QUIZ_DATA.find(d => d.id === step)
     const stepData = step === 2 && answers['step_1']
         ? { ...currentData, options: OPTIONS_BY_TYPE[answers['step_1']] || currentData.options }
         : currentData;
 
+    // --- РЕНДЕРИНГ ШАГОВ ---
+
+    // Шаг 1: Карточки типов помещений
     const renderStep1Cards = () => (
         <div className="options-grid-step-1">
             {QUIZ_DATA[0].options.map((opt, idx) => (
-                <div key={idx} className={`option-card ${answers['step_1'] === opt ? 'selected' : ''}`} onClick={() => handleAnswer(opt)}>
+                <div
+                    key={idx}
+                    className={`option-card ${answers['step_1'] === opt ? 'selected' : ''}`}
+                    onClick={() => handleAnswer(opt)}
+                >
                     <div className="card-image-wrapper">
                         <img src={TYPE_IMAGES[opt]} alt={opt} />
                         {answers['step_1'] === opt && <div className="check-overlay">✓</div>}
@@ -407,6 +407,7 @@ function App() {
         </div>
     )
 
+    // Шаг 2: Карточки зон (динамические)
     const renderStep2Cards = () => {
         const currentSelection = answers[`step_2`] || []
         const options = OPTIONS_BY_TYPE[answers['step_1']] || QUIZ_DATA[1].options
@@ -444,8 +445,10 @@ function App() {
         )
     }
 
+    // Шаг 3: Ползунок с визуализацией
     const renderStep3Range = (data) => {
         const val = answers[`step_3`] !== undefined ? answers[`step_3`] : data.defaultValue
+        // Формула для размера квадрата: от 140px до 280px
         const size = 140 + (val - data.min) * ((280 - 140) / (data.max - data.min))
 
         return (
@@ -456,7 +459,14 @@ function App() {
                     </div>
                 </div>
                 <div className="slider-wrapper">
-                    <input type="range" min={data.min} max={data.max} step={data.step} value={val} onChange={(e) => handleAnswer(Number(e.target.value))} />
+                    <input
+                        type="range"
+                        min={data.min}
+                        max={data.max}
+                        step={data.step}
+                        value={val}
+                        onChange={(e) => handleAnswer(Number(e.target.value))}
+                    />
                     <div className="slider-labels">
                         <span>{data.min} м²</span>
                         <span>{data.max} м²</span>
@@ -466,10 +476,15 @@ function App() {
         )
     }
 
+    // Шаг 4: Карточки стилей
     const renderStep4Cards = () => (
         <div className="options-grid-step-1">
             {QUIZ_DATA[3].options.map((opt, idx) => (
-                <div key={idx} className={`option-card ${answers['step_4'] === opt ? 'selected' : ''}`} onClick={() => handleAnswer(opt)}>
+                <div
+                    key={idx}
+                    className={`option-card ${answers['step_4'] === opt ? 'selected' : ''}`}
+                    onClick={() => handleAnswer(opt)}
+                >
                     <div className="card-image-wrapper">
                         <img src={STYLE_IMAGES[opt]} alt={opt} />
                         {answers['step_4'] === opt && <div className="check-overlay">✓</div>}
@@ -482,12 +497,18 @@ function App() {
 
     return (
         <div className="page-wrapper">
+            {/* Фон сайта (размывается при открытии квиза) */}
             <div className={`page-content ${started ? 'blurred' : ''}`}>
                 <Header />
                 <div className="app-container">
                     <div className="start-screen">
-                        <h1 className="start-title">ПРОЙДИТЕ ТЕСТ И УЗНАЙТЕ СТОИМОСТЬ ДИЗАЙН-ПРОЕКТА ЗА 2 МИНУТЫ</h1>
-                        <button className="start-btn" onClick={handleStart}>НАЧАТЬ ТЕСТ</button>
+                        <div className="start-content">
+                            <h1 className="start-title">ПРОЙДИТЕ ТЕСТ И УЗНАЙТЕ СТОИМОСТЬ ДИЗАЙН-ПРОЕКТА ЗА 2 МИНУТЫ</h1>
+                        </div>
+
+                        <button className="house-btn" onClick={handleStart}>
+                            <span className="btn-text">НАЧАТЬ ТЕСТ</span>
+                        </button>
                     </div>
                 </div>
                 <ServicesSection />
@@ -495,6 +516,7 @@ function App() {
                 <Footer />
             </div>
 
+            {/* Модальное окно квиза */}
             {started && (
                 <div className="quiz-overlay">
                     <div className={`quiz-wrapper ${success ? 'success-mode' : ''}`}>
@@ -514,9 +536,12 @@ function App() {
                         ) : (
                             <div className="quiz-left">
                                 {step === 6 ? (
+                                    // === ШАГ 6: ФОРМА ===
                                     <>
                                         <div className="quiz-header">МЫ УЖЕ ПРИСТУПИЛИ К РАСЧЁТУ!</div>
-                                        <div className="question-title">Укажите ваши контактные данные для получения результата расчёта</div>
+                                        <div className="question-title">
+                                            Укажите ваши контактные данные для получения результата расчёта
+                                        </div>
                                         <form onSubmit={handleSubmit}>
                                             <div className="form-group">
                                                 <input type="text" name="name" className="form-input" placeholder="Имя" required value={contactForm.name} onChange={handleContactChange} />
@@ -535,21 +560,22 @@ function App() {
                                                 <span>Я даю согласие на обработку персональных данных</span>
                                             </label>
 
+                                            {/* ПОЛЗОНОК ШАГОВ ДЛЯ ФОРМЫ */}
                                             <div className="progress-container" style={{ marginTop: '30px' }}>
                                                 <span className="progress-text">Шаг 6 из 6</span>
-                                                <div className="progress-bar"><div className="progress-fill" style={{ width: '100%' }}></div></div>
+                                                <div className="progress-bar">
+                                                    <div className="progress-fill" style={{ width: '100%' }}></div>
+                                                </div>
                                             </div>
 
                                             <div className="quiz-footer" style={{ marginTop: '15px' }}>
                                                 <button type="button" className="btn-nav" onClick={() => setStep(5)}>← НАЗАД</button>
-                                                {/* ИЗМЕНЕНИЕ: кнопка учитывает состояние загрузки */}
-                                                <button type="submit" className="btn-nav primary" disabled={!isFormValid() || loading}>
-                                                    {loading ? 'ОТПРАВКА...' : 'ПОЛУЧИТЬ КОНСУЛЬТАЦИЮ'}
-                                                </button>
+                                                <button type="submit" className="btn-nav primary" disabled={!isFormValid()}>ПОЛУЧИТЬ КОНСУЛЬТАЦИЮ</button>
                                             </div>
                                         </form>
                                     </>
                                 ) : (
+                                    // === ШАГИ 1-5 ===
                                     <>
                                         <div className="quiz-header">УЗНАЙТЕ СТОИМОСТЬ ДИЗАЙН-ПРОЕКТА</div>
                                         <div className="question-title">{stepData.title}</div>
@@ -563,7 +589,13 @@ function App() {
                                             <div className="options-list">
                                                 {stepData.options.map((opt, idx) => (
                                                     <label key={idx} className="option-item">
-                                                        <input type="radio" name={`q_${step}`} value={opt} checked={answers[`step_${step}`] === opt} onChange={() => handleAnswer(opt)} />
+                                                        <input
+                                                            type="radio"
+                                                            name={`q_${step}`}
+                                                            value={opt}
+                                                            checked={answers[`step_${step}`] === opt}
+                                                            onChange={() => handleAnswer(opt)}
+                                                        />
                                                         <span className="option-icon"></span>
                                                         {opt}
                                                     </label>
@@ -571,6 +603,7 @@ function App() {
                                             </div>
                                         )}
 
+                                        {/* ПОЛЗОНОК ШАГОВ ДЛЯ ОБЫЧНЫХ ВОПРОСОВ */}
                                         <div className="quiz-footer">
                                             <div className="progress-container">
                                                 <span className="progress-text">Шаг {step} из 6</span>
