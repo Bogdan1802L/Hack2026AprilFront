@@ -113,36 +113,30 @@ export default function AdminPanel() {
     const [applications, setApplications] = useState([])
     const [loading, setLoading] = useState(true)
 
-    useEffect(() => {
-        const fetchApplications = async () => {
-            try {
-                const response = await fetch('/api/submissions', {
-                    method: 'GET',
-                    headers: { 'Content-Type': 'application/json' }
-                })
-
-                if (!response.ok) throw new Error(`HTTP ${response.status}`)
-
-                const data = await response.json()
-                setApplications(data.map((item, i) => ({ id: item.id || i + 1, ...item })))
-            } catch (err) {
-                console.warn('Бэкенд недоступен, загружаю демо-данные:', err.message)
-                setApplications([
-                    { id: 1, name: "Иван Иванов", phone: "+79991234567", email: "ivan@example.com", comment: "Хочу светлый интерьер", room_type: "квартира", zones: ["кухня", "гостиная", "спальня"], area: 65, style: "скандинавский", budget: "500 000 ₽", utm_source: "instagram", create_time: "2026-04-05T07:58:31.437495" },
-                    { id: 2, name: "Мария Петрова", phone: "+79997654321", email: "maria@example.com", comment: "Нужна перепланировка", room_type: "студия", zones: ["кухня-гостиная", "ванная"], area: 42, style: "лофт", budget: "350 000 ₽", utm_source: "google_ads", create_time: "2026-04-05T07:58:31.437495" },
-                    { id: 3, name: "Алексей Сидоров", phone: "+79991112233", email: "alex@example.com", comment: "Бюджет ограничен", room_type: "частный дом", zones: ["гостиная", "кабинет", "терраса"], area: 120, style: "классический", budget: "1 200 000 ₽", utm_source: "direct", create_time: "2026-04-05T07:58:31.437495" }
-                ])
-            } finally {
-                setLoading(false)
-            }
+        useEffect(() => {
+    const fetchOrders = async () => {
+        try {
+            const response = await fetch('http://localhost:8000/quiz/orders', {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' }
+            });
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            const data = await response.json();
+            setApplications(data.map((item, i) => ({ id: item.id || i + 1, ...item })));
+        } catch (err) {
+            console.error('Ошибка загрузки заказов:', err);
+            setApplications([]);
+        } finally {
+            setLoading(false);
         }
-        fetchApplications()
-    }, [])
+    };
+    fetchOrders();
+    }, []);
 
     const handleDelete = async (orderId) => {
         if (!window.confirm('Удалить эту заявку?')) return
         try {
-            const res = await fetch(`/quiz/orders/${orderId}`, { method: 'DELETE' })
+            const res = await fetch(`http://localhost:8000/quiz/orders/${orderId}`, { method: 'DELETE' })
             if (!res.ok) throw new Error(`Ошибка ${res.status}`)
             setApplications(prev => prev.filter(a => a.id !== orderId))
         } catch (err) {

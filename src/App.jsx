@@ -356,21 +356,48 @@ function App() {
         return formatted;
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
+    const handleSubmit = async (e) => {
+        e.preventDefault();
         if (!contactForm.name || !contactForm.phone || !contactForm.agree) {
-            alert('Пожалуйста, укажите ваше имя, заполните телефон и дайте согласие на обработку данных.')
-            return
+            alert('Пожалуйста, укажите ваше имя, заполните телефон и дайте согласие на обработку данных.');
+            return;
         }
-        const finalData = {
-            ...answers,
-            step_3: answers['step_3'] || 60,
-            contact: contactForm,
-            timestamp: new Date().toISOString()
+
+        // Вспомогательная функция для получения utm_source из URL
+        const getUtmSource = () => {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('utm_source') || '';
+        };
+
+        const payload = {
+            name: contactForm.name.trim(),
+            phone: contactForm.phone.trim(),
+            email: contactForm.email?.trim() || '',
+            comment: contactForm.comment?.trim() || '',
+            room_type: answers['step_1'] || '',
+            zones: Array.isArray(answers['step_2']) ? answers['step_2'] : [],
+            area: Number(answers['step_3']) || 60,
+            style: answers['step_4'] || '',
+            budget: answers['step_5'] || '',
+            utm_source: getUtmSource()
+        };
+
+        try {
+            const response = await fetch('http://localhost:8000/quiz/result', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+            // Успешная отправка
+            setSuccess(true);
+        } catch (err) {
+            console.error('Ошибка отправки заявки:', err);
+            alert('Не удалось отправить заявку. Попробуйте позже.');
         }
-        console.log('SUBMITTING DATA:', finalData)
-        setTimeout(() => setSuccess(true), 500)
-    }
+    };
 
     const isNextDisabled = () => {
         if (step === 2) {
