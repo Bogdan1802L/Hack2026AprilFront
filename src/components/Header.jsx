@@ -1,4 +1,3 @@
-// src/components/Header.jsx
 import { useState } from 'react'
 
 export default function Header() {
@@ -20,11 +19,11 @@ export default function Header() {
                         <span className="work-hours">9:00–20:00</span>
                     </div>
 
-                    {/* Кнопка мобильного меню */}
+                    {}
                     <button
                         className="mobile-menu-btn"
                         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                        style={{ display: 'none' }} // Скрыто на десктопе, раскомментируйте медиа-запрос в CSS
+                        style={{ display: 'none' }}
                     >
                         ☰
                     </button>

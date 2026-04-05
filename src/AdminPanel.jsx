@@ -1,10 +1,8 @@
-// src/AdminPanel.jsx
 import { useState, useEffect } from 'react'
 import './App.css'
 import Header from './components/Header'
 import Footer from './components/Footer'
 
-// Компонент карточки заявки
 function ApplicationCard({ data, onDelete }) {
     const formatDate = (dateString) => {
         return new Date(dateString).toLocaleString('ru-RU', {
@@ -111,7 +109,6 @@ function ApplicationCard({ data, onDelete }) {
     )
 }
 
-// Основной компонент
 export default function AdminPanel() {
     const [applications, setApplications] = useState([])
     const [loading, setLoading] = useState(true)
@@ -129,7 +126,6 @@ export default function AdminPanel() {
                 const data = await response.json()
                 setApplications(data.map((item, i) => ({ id: item.id || i + 1, ...item })))
             } catch (err) {
-                // ⚠️ ВАЖНО: Не вызываем setError, чтобы UI не блокировался
                 console.warn('Бэкенд недоступен, загружаю демо-данные:', err.message)
                 setApplications([
                     { id: 1, name: "Иван Иванов", phone: "+79991234567", email: "ivan@example.com", comment: "Хочу светлый интерьер", room_type: "квартира", zones: ["кухня", "гостиная", "спальня"], area: 65, style: "скандинавский", budget: "500 000 ₽", utm_source: "instagram", create_time: "2026-04-05T07:58:31.437495" },
@@ -143,7 +139,6 @@ export default function AdminPanel() {
         fetchApplications()
     }, [])
 
-    // Удаление заявки: DELETE /quiz/orders/{id}
     const handleDelete = async (orderId) => {
         if (!window.confirm('Удалить эту заявку?')) return
         try {
