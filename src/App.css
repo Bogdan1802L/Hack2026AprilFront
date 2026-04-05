@@ -1318,3 +1318,259 @@ form .quiz-footer .btn-nav.primary {
         font-size: 0.75rem;
     }
 }
+
+/* === ADMIN PANEL STYLES === */
+.admin-main {
+    flex: 1;
+    padding: 40px 20px;
+    background-color: var(--bg-color);
+}
+
+.admin-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.admin-title {
+    font-size: 2rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    margin: 0;
+    color: var(--text-main);
+}
+
+.admin-subtitle {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+}
+
+.admin-filters {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.admin-search {
+    position: relative;
+    flex: 1;
+    min-width: 250px;
+}
+
+.admin-search-input {
+    width: 100%;
+    padding: 12px 15px 12px 40px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    background: #fff;
+}
+
+.admin-search svg {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+}
+
+.admin-filter-source {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.admin-filter-source label {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.admin-select {
+    padding: 10px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: #fff;
+    font-size: 0.95rem;
+}
+
+.admin-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 25px;
+}
+
+.admin-card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.admin-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+}
+
+.admin-card-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 20px;
+    background: rgba(0,0,0,0.03);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.admin-card-id {
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+.admin-card-date {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.admin-card-body {
+    padding: 20px;
+    flex: 1;
+}
+
+.admin-field {
+    margin-bottom: 12px;
+    display: flex;
+    gap: 10px;
+    font-size: 0.95rem;
+}
+
+.admin-field-label {
+    color: var(--text-muted);
+    min-width: 100px;
+    flex-shrink: 0;
+}
+
+.admin-field-value {
+    color: var(--text-main);
+    font-weight: 500;
+}
+
+.admin-link-phone {
+    color: var(--text-main);
+    text-decoration: none;
+}
+
+.admin-link-phone:hover {
+    text-decoration: underline;
+}
+
+.admin-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    background: rgba(0,0,0,0.08);
+    border-radius: 20px;
+    font-size: 0.85rem;
+}
+
+.admin-zones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.admin-zone-tag {
+    padding: 4px 10px;
+    background: rgba(0,0,0,0.06);
+    border-radius: 6px;
+    font-size: 0.85rem;
+}
+
+.admin-field-row {
+    display: flex;
+    gap: 20px;
+}
+
+.admin-budget {
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+.admin-comment {
+    margin: 5px 0 0 0;
+    color: var(--text-muted);
+    font-style: italic;
+    line-height: 1.4;
+}
+
+.admin-utm {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.admin-card-actions {
+    display: flex;
+    gap: 10px;
+    padding: 15px 20px 20px;
+    border-top: 1px solid var(--border-color);
+}
+
+.admin-card-actions .btn-nav {
+    flex: 1;
+    padding: 10px;
+    font-size: 0.85rem;
+}
+
+.admin-loading,
+.admin-empty,
+.admin-error {
+    text-align: center;
+    padding: 60px;
+    color: var(--text-muted);
+    font-size: 1.1rem;
+}
+
+.admin-error {
+    color: #c00;
+}
+
+/* Адаптив для админ-панели */
+@media (max-width: 768px) {
+    .admin-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .admin-filters {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .admin-field-row {
+        flex-direction: column;
+        gap: 12px;
+    }
+}
+
+.admin-card-actions .btn-nav.danger {
+    border-color: #c00;
+    color: #c00;
+    background: transparent;
+}
+
+.admin-card-actions .btn-nav.danger:hover {
+    background: #c00;
+    color: #fff;
+}
