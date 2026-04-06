@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from 'react'
-import Header from './components/Header' // укажите актуальный путь
 import './App.css'
 
 const OPTIONS_BY_TYPE = {
@@ -84,26 +83,26 @@ const STYLE_IMAGES = {
     "Пока не определился": "https://gutenix.com/demo/free/elementor/2166/wp-content/uploads/2019/02/imageGal4.png"
 }
 
-// function Header() {
-//     const handleLogoClick = () => window.scrollTo({ top: 0, behavior: 'smooth' })
-//
-//     return (
-//         <header className="site-header">
-//             <div className="header-container">
-//                 <div className="header-top">
-//                     <div className="logo" onClick={handleLogoClick} style={{ cursor: 'pointer' }}>
-//                         <span className="logo-icon">✦</span>
-//                         <span>VERNIKODOV</span>
-//                     </div>
-//                     <div className="header-contact">
-//                         <a href="tel:+79999999999" className="phone-link">+7 (999) 999-99-99</a>
-//                         <span className="work-hours">9:00–20:00</span>
-//                     </div>
-//                 </div>
-//             </div>
-//         </header>
-//     )
-// }
+function Header() {
+    const handleLogoClick = () => window.scrollTo({ top: 0, behavior: 'smooth' })
+
+    return (
+        <header className="site-header">
+            <div className="header-container">
+                <div className="header-top">
+                    <div className="logo" onClick={handleLogoClick} style={{ cursor: 'pointer' }}>
+                        <span className="logo-icon">✦</span>
+                        <span>VERNIKODOV</span>
+                    </div>
+                    <div className="header-contact">
+                        <a href="tel:+79999999999" className="phone-link">+7 (999) 999-99-99</a>
+                        <span className="work-hours">9:00–20:00</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+    )
+}
 
 function ServicesSection() {
     const services = [
